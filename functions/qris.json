@@ -1,27 +1,32 @@
 {
-  "uuid": "4892efe4-0e35-4d84-8342-d1ea3ae196a4",
+  "uuid": "5b0f473f-cfc0-4f03-b7ea-cd24eadb3e11",
   "lastMigration": 27,
   "name": "QRIS (copy)",
   "endpointPrefix": "",
   "latency": 0,
-  "port": 9091,
+  "port": 9093,
   "hostname": "",
   "folders": [],
   "routes": [
     {
-      "uuid": "e4f10fbd-659d-4f13-a749-2beab25e3bd0",
+      "uuid": "1d64b5cc-21e9-4745-a81a-504a48d82681",
       "type": "http",
       "documentation": "QRIS Inquiry",
       "method": "post",
       "endpoint": "inquiry",
       "responses": [
         {
-          "uuid": "694fab24-cb6b-4d2a-8821-3af492fdc713",
-          "body": "{\n  \"statusCode\": 0,\n  \"data\": {\n    \"type\": \"static\",\n    \"transactionAmount\": \"50000\",\n    \"storeLabel\": \"MCD\",\n    \"merchantCity\": \"Jakarta\"\n  }\n}",
+          "uuid": "037adde1-1ba6-446b-ba99-aeff7502ecb1",
+          "body": "{\n  \"statusCode\": 0,\n  \"data\": {\n    \"type\": \"static\",\n    \"transactionAmount\": \"50000\",\n    \"storeLabel\": \"MCDfge\",\n    \"merchantCity\": \"Jakarta\"\n  }\n}",
           "latency": 0,
           "statusCode": 200,
           "label": "Success Dynamic QRIS",
-          "headers": [],
+          "headers": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
           "bodyType": "INLINE",
           "filePath": "",
           "databucketID": "",
@@ -41,7 +46,7 @@
           "default": false
         },
         {
-          "uuid": "26a46edb-eebf-4306-8dab-49a919c94d15",
+          "uuid": "ab940136-1624-459a-9b55-238598abc962",
           "body": "{\n  \"statusCode\": 0,\n  \"data\": {\n    \"type\": \"static\",\n    \"transactionAmount\": \"50000\",\n    \"storeLabel\": \"KFC\",\n    \"merchantCity\": \"Jakarta\"\n  }\n}",
           "latency": 0,
           "statusCode": 200,
@@ -66,7 +71,7 @@
           "default": false
         },
         {
-          "uuid": "2884bb8d-159c-40ca-88c5-2a775164f619",
+          "uuid": "022fd4d0-d03a-47bb-9dbe-d13accdd2573",
           "body": "{\n  \"statusCode\": 400,\n  \"data\": {\n    \"title\": \"Pembayaran Tip Gagal\",\n    \"description\": \"Maaf, pembayaran tip belum bisa dilakukan\",\n    \"image\": \"https://res.cloudinary.com/dbw2gd4m8/image/upload/v1689493869/Failed-Error-General_bzahbu.png\",\n    \"title_button\": \"OK\",\n    \"button_test_id\": \"1\",\n    \"is_scan\": true\n  }\n}",
           "latency": 0,
           "statusCode": 400,
@@ -91,7 +96,7 @@
           "default": false
         },
         {
-          "uuid": "c53ce478-4eb9-4154-862b-8e9bf440a060",
+          "uuid": "0cb3e915-dcc0-4c7f-8f24-4f35ee543db8",
           "body": "{\n  \"statusCode\": 400,\n  \"data\": {\n    \"title\": \"Merchant Tidak Ditemukan\",\n    \"description\": \"Maaf, kode QR merchant ini tidak ditemukan. Cek ulang kode QR merchant, ya!\",\n    \"image\": \"https://res.cloudinary.com/dbw2gd4m8/image/upload/v1689493570/QRis_not_Found_1_mzd2dj.png\",\n    \"title_button\": \"Scan Ulang\",\n    \"button_test_id\": \"1\",\n    \"is_scan\": true\n  }\n}",
           "latency": 0,
           "statusCode": 400,
@@ -116,7 +121,7 @@
           "default": false
         },
         {
-          "uuid": "f76c6c74-dbb4-4490-a1d9-d67ebc0cd43e",
+          "uuid": "046212f4-0e51-4f7a-b08e-4e18dc12e6b5",
           "body": "{\n  \"statusCode\": 400,\n  \"data\": {\n    \"title\": \"Missing parameters\",\n    \"description\": \"Maaf, Missing parameters\",\n    \"image\": \"https://res.cloudinary.com/dbw2gd4m8/image/upload/v1689493869/Failed-Error-General_bzahbu.png\",\n    \"title_button\": \"OK\",\n    \"button_test_id\": \"1\",\n    \"is_scan\": true\n  }\n}",
           "latency": 0,
           "statusCode": 400,
@@ -145,7 +150,7 @@
   "rootChildren": [
     {
       "type": "route",
-      "uuid": "e4f10fbd-659d-4f13-a749-2beab25e3bd0"
+      "uuid": "1d64b5cc-21e9-4745-a81a-504a48d82681"
     }
   ],
   "proxyMode": false,
@@ -181,7 +186,7 @@
   ],
   "data": [
     {
-      "uuid": "220529b9-a302-42b3-9ec7-265c97a3deb4",
+      "uuid": "035b3adc-bc72-4cbe-84bc-a9ce944877aa",
       "id": "1fdx",
       "name": "Users",
       "documentation": "",
