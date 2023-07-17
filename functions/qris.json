@@ -1,0 +1,191 @@
+{
+  "uuid": "4892efe4-0e35-4d84-8342-d1ea3ae196a4",
+  "lastMigration": 27,
+  "name": "QRIS (copy)",
+  "endpointPrefix": "",
+  "latency": 0,
+  "port": 9091,
+  "hostname": "",
+  "folders": [],
+  "routes": [
+    {
+      "uuid": "e4f10fbd-659d-4f13-a749-2beab25e3bd0",
+      "type": "http",
+      "documentation": "QRIS Inquiry",
+      "method": "post",
+      "endpoint": "inquiry",
+      "responses": [
+        {
+          "uuid": "694fab24-cb6b-4d2a-8821-3af492fdc713",
+          "body": "{\n  \"statusCode\": 0,\n  \"data\": {\n    \"type\": \"static\",\n    \"transactionAmount\": \"50000\",\n    \"storeLabel\": \"MCD\",\n    \"merchantCity\": \"Jakarta\"\n  }\n}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "Success Dynamic QRIS",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [
+            {
+              "target": "query",
+              "modifier": "rawData",
+              "value": "DYNAMIC_MCD",
+              "invert": false,
+              "operator": "equals"
+            }
+          ],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": false
+        },
+        {
+          "uuid": "26a46edb-eebf-4306-8dab-49a919c94d15",
+          "body": "{\n  \"statusCode\": 0,\n  \"data\": {\n    \"type\": \"static\",\n    \"transactionAmount\": \"50000\",\n    \"storeLabel\": \"KFC\",\n    \"merchantCity\": \"Jakarta\"\n  }\n}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "Success Static QRIS",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [
+            {
+              "target": "query",
+              "modifier": "rawData",
+              "value": "STATIC_KFC",
+              "invert": false,
+              "operator": "equals"
+            }
+          ],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": false
+        },
+        {
+          "uuid": "2884bb8d-159c-40ca-88c5-2a775164f619",
+          "body": "{\n  \"statusCode\": 400,\n  \"data\": {\n    \"title\": \"Pembayaran Tip Gagal\",\n    \"description\": \"Maaf, pembayaran tip belum bisa dilakukan\",\n    \"image\": \"https://res.cloudinary.com/dbw2gd4m8/image/upload/v1689493869/Failed-Error-General_bzahbu.png\",\n    \"title_button\": \"OK\",\n    \"button_test_id\": \"1\",\n    \"is_scan\": true\n  }\n}",
+          "latency": 0,
+          "statusCode": 400,
+          "label": "Tip Failed",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [
+            {
+              "target": "query",
+              "modifier": "rawData",
+              "value": "TIP_FAILED",
+              "invert": false,
+              "operator": "equals"
+            }
+          ],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": false
+        },
+        {
+          "uuid": "c53ce478-4eb9-4154-862b-8e9bf440a060",
+          "body": "{\n  \"statusCode\": 400,\n  \"data\": {\n    \"title\": \"Merchant Tidak Ditemukan\",\n    \"description\": \"Maaf, kode QR merchant ini tidak ditemukan. Cek ulang kode QR merchant, ya!\",\n    \"image\": \"https://res.cloudinary.com/dbw2gd4m8/image/upload/v1689493570/QRis_not_Found_1_mzd2dj.png\",\n    \"title_button\": \"Scan Ulang\",\n    \"button_test_id\": \"1\",\n    \"is_scan\": true\n  }\n}",
+          "latency": 0,
+          "statusCode": 400,
+          "label": "Merchant Not Found",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [
+            {
+              "target": "query",
+              "modifier": "rawData",
+              "value": "[\\s\\S]*",
+              "invert": false,
+              "operator": "regex"
+            }
+          ],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": false
+        },
+        {
+          "uuid": "f76c6c74-dbb4-4490-a1d9-d67ebc0cd43e",
+          "body": "{\n  \"statusCode\": 400,\n  \"data\": {\n    \"title\": \"Missing parameters\",\n    \"description\": \"Maaf, Missing parameters\",\n    \"image\": \"https://res.cloudinary.com/dbw2gd4m8/image/upload/v1689493869/Failed-Error-General_bzahbu.png\",\n    \"title_button\": \"OK\",\n    \"button_test_id\": \"1\",\n    \"is_scan\": true\n  }\n}",
+          "latency": 0,
+          "statusCode": 400,
+          "label": "Bad Request - Missing parameters",
+          "headers": [
+            {
+              "key": "",
+              "value": ""
+            }
+          ],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true
+        }
+      ],
+      "enabled": true,
+      "responseMode": null
+    }
+  ],
+  "rootChildren": [
+    {
+      "type": "route",
+      "uuid": "e4f10fbd-659d-4f13-a749-2beab25e3bd0"
+    }
+  ],
+  "proxyMode": false,
+  "proxyHost": "",
+  "proxyRemovePrefix": false,
+  "tlsOptions": {
+    "enabled": false,
+    "type": "CERT",
+    "pfxPath": "",
+    "certPath": "",
+    "keyPath": "",
+    "caPath": "",
+    "passphrase": ""
+  },
+  "cors": true,
+  "headers": [
+    {
+      "key": "Content-Type",
+      "value": "application/json"
+    }
+  ],
+  "proxyReqHeaders": [
+    {
+      "key": "",
+      "value": ""
+    }
+  ],
+  "proxyResHeaders": [
+    {
+      "key": "",
+      "value": ""
+    }
+  ],
+  "data": [
+    {
+      "uuid": "220529b9-a302-42b3-9ec7-265c97a3deb4",
+      "id": "1fdx",
+      "name": "Users",
+      "documentation": "",
+      "value": "[\n  {{#repeat 50}}\n  {\n    \"id\": \"{{faker 'datatype.uuid'}}\",\n    \"username\": \"{{faker 'internet.userName'}}\"\n  }\n  {{/repeat}}\n]"
+    }
+  ]
+}

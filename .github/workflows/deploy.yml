@@ -1,0 +1,30 @@
+name: Deployment
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - "main"
+
+jobs:
+  deploy:
+    runs-on: ubuntu-20.04
+    name: Deploy code to firebase functions
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Install yarn dependencies
+        run: |
+          yarn
+
+      - name: Deploy to firebase functions
+        env:
+          firebaseToken: ${{ secrets.FIREBASE_TOKEN }}
+          firebaseProjects: ${{ secrets.FIREBASE_PROJECT }}
+        run: |
+          yarn global add firebase-tools
+          cd functions && yarn
+          firebase deploy \
+            --only functions \
+            --project "$firebaseProjects" \
+            --token "$firebaseToken"
