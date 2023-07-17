@@ -11,7 +11,7 @@
     {
       "uuid": "b10237b7-2431-4517-89a5-4c21a098636d",
       "type": "http",
-      "documentation": "QRIS Inquiry",
+      "documentation": "QRIS Inquiry 2",
       "method": "post",
       "endpoint": "qris/inquiry",
       "responses": [
