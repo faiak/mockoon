@@ -1,7 +1,7 @@
 {
   "uuid": "5b0f473f-cfc0-4f03-b7ea-cd24eadb3e11",
   "lastMigration": 27,
-  "name": "QRIS (copy)",
+  "name": "QRIS",
   "endpointPrefix": "",
   "latency": 0,
   "port": 9093,
