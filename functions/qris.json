@@ -1,22 +1,22 @@
 {
-  "uuid": "4892efe4-0e35-4d84-8342-d1ea3ae196a4",
+  "uuid": "44f8e007-d63d-45a4-8a89-99dfeefaf1e4",
   "lastMigration": 27,
-  "name": "QRIS (copy)",
+  "name": "QRIS",
   "endpointPrefix": "",
   "latency": 0,
-  "port": 9091,
+  "port": 9090,
   "hostname": "",
   "folders": [],
   "routes": [
     {
-      "uuid": "e4f10fbd-659d-4f13-a749-2beab25e3bd0",
+      "uuid": "b10237b7-2431-4517-89a5-4c21a098636d",
       "type": "http",
       "documentation": "QRIS Inquiry",
       "method": "post",
       "endpoint": "inquiry",
       "responses": [
         {
-          "uuid": "694fab24-cb6b-4d2a-8821-3af492fdc713",
+          "uuid": "f54cff14-e1b2-4e76-9a74-435a5e53d875",
           "body": "{\n  \"statusCode\": 0,\n  \"data\": {\n    \"type\": \"static\",\n    \"transactionAmount\": \"50000\",\n    \"storeLabel\": \"MCD\",\n    \"merchantCity\": \"Jakarta\"\n  }\n}",
           "latency": 0,
           "statusCode": 200,
@@ -41,7 +41,7 @@
           "default": false
         },
         {
-          "uuid": "26a46edb-eebf-4306-8dab-49a919c94d15",
+          "uuid": "c54777ff-5c7f-4912-82c8-39d30a888655",
           "body": "{\n  \"statusCode\": 0,\n  \"data\": {\n    \"type\": \"static\",\n    \"transactionAmount\": \"50000\",\n    \"storeLabel\": \"KFC\",\n    \"merchantCity\": \"Jakarta\"\n  }\n}",
           "latency": 0,
           "statusCode": 200,
@@ -66,7 +66,7 @@
           "default": false
         },
         {
-          "uuid": "2884bb8d-159c-40ca-88c5-2a775164f619",
+          "uuid": "690ac2b5-56ee-4536-8db6-3fa517c50898",
           "body": "{\n  \"statusCode\": 400,\n  \"data\": {\n    \"title\": \"Pembayaran Tip Gagal\",\n    \"description\": \"Maaf, pembayaran tip belum bisa dilakukan\",\n    \"image\": \"https://res.cloudinary.com/dbw2gd4m8/image/upload/v1689493869/Failed-Error-General_bzahbu.png\",\n    \"title_button\": \"OK\",\n    \"button_test_id\": \"1\",\n    \"is_scan\": true\n  }\n}",
           "latency": 0,
           "statusCode": 400,
@@ -91,7 +91,7 @@
           "default": false
         },
         {
-          "uuid": "c53ce478-4eb9-4154-862b-8e9bf440a060",
+          "uuid": "61623f34-db88-4405-848c-216062c07706",
           "body": "{\n  \"statusCode\": 400,\n  \"data\": {\n    \"title\": \"Merchant Tidak Ditemukan\",\n    \"description\": \"Maaf, kode QR merchant ini tidak ditemukan. Cek ulang kode QR merchant, ya!\",\n    \"image\": \"https://res.cloudinary.com/dbw2gd4m8/image/upload/v1689493570/QRis_not_Found_1_mzd2dj.png\",\n    \"title_button\": \"Scan Ulang\",\n    \"button_test_id\": \"1\",\n    \"is_scan\": true\n  }\n}",
           "latency": 0,
           "statusCode": 400,
@@ -116,7 +116,140 @@
           "default": false
         },
         {
-          "uuid": "f76c6c74-dbb4-4490-a1d9-d67ebc0cd43e",
+          "uuid": "5519aa92-580c-4d5c-9c67-35a9714f4fc7",
+          "body": "{\n  \"statusCode\": 400,\n  \"data\": {\n    \"title\": \"Missing parameters\",\n    \"description\": \"Maaf, Missing parameters\",\n    \"image\": \"https://res.cloudinary.com/dbw2gd4m8/image/upload/v1689493869/Failed-Error-General_bzahbu.png\",\n    \"title_button\": \"OK\",\n    \"button_test_id\": \"1\",\n    \"is_scan\": true\n  }\n}",
+          "latency": 0,
+          "statusCode": 400,
+          "label": "Bad Request - Missing parameters",
+          "headers": [
+            {
+              "key": "",
+              "value": ""
+            }
+          ],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true
+        }
+      ],
+      "enabled": true,
+      "responseMode": null
+    },
+    {
+      "uuid": "5a631c21-7329-41a0-a234-7fa63df936ea",
+      "type": "http",
+      "documentation": "QRIS Inquiry",
+      "method": "get",
+      "endpoint": "inquiry",
+      "responses": [
+        {
+          "uuid": "ff0cb53f-e8a6-426a-abd9-2a6dea435b24",
+          "body": "{\n  \"statusCode\": 0,\n  \"data\": {\n    \"type\": \"static\",\n    \"transactionAmount\": \"50000\",\n    \"storeLabel\": \"MCD\",\n    \"merchantCity\": \"Jakarta\"\n  }\n}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "Success Dynamic QRIS",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [
+            {
+              "target": "query",
+              "modifier": "rawData",
+              "value": "DYNAMIC_MCD",
+              "invert": false,
+              "operator": "equals"
+            }
+          ],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": false
+        },
+        {
+          "uuid": "67007c0b-70ab-4f9d-9b57-d0da195a8549",
+          "body": "{\n  \"statusCode\": 0,\n  \"data\": {\n    \"type\": \"static\",\n    \"transactionAmount\": \"50000\",\n    \"storeLabel\": \"KFC\",\n    \"merchantCity\": \"Jakarta\"\n  }\n}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "Success Static QRIS",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [
+            {
+              "target": "query",
+              "modifier": "rawData",
+              "value": "STATIC_KFC",
+              "invert": false,
+              "operator": "equals"
+            }
+          ],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": false
+        },
+        {
+          "uuid": "c353d1ee-88ce-4e41-891c-cffdc6f58daa",
+          "body": "{\n  \"statusCode\": 400,\n  \"data\": {\n    \"title\": \"Pembayaran Tip Gagal\",\n    \"description\": \"Maaf, pembayaran tip belum bisa dilakukan\",\n    \"image\": \"https://res.cloudinary.com/dbw2gd4m8/image/upload/v1689493869/Failed-Error-General_bzahbu.png\",\n    \"title_button\": \"OK\",\n    \"button_test_id\": \"1\",\n    \"is_scan\": true\n  }\n}",
+          "latency": 0,
+          "statusCode": 400,
+          "label": "Tip Failed",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [
+            {
+              "target": "query",
+              "modifier": "rawData",
+              "value": "TIP_FAILED",
+              "invert": false,
+              "operator": "equals"
+            }
+          ],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": false
+        },
+        {
+          "uuid": "2a1351be-972f-484d-8c7d-3af0bb4099c7",
+          "body": "{\n  \"statusCode\": 400,\n  \"data\": {\n    \"title\": \"Merchant Tidak Ditemukan\",\n    \"description\": \"Maaf, kode QR merchant ini tidak ditemukan. Cek ulang kode QR merchant, ya!\",\n    \"image\": \"https://res.cloudinary.com/dbw2gd4m8/image/upload/v1689493570/QRis_not_Found_1_mzd2dj.png\",\n    \"title_button\": \"Scan Ulang\",\n    \"button_test_id\": \"1\",\n    \"is_scan\": true\n  }\n}",
+          "latency": 0,
+          "statusCode": 400,
+          "label": "Merchant Not Found",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [
+            {
+              "target": "query",
+              "modifier": "rawData",
+              "value": "[\\s\\S]*",
+              "invert": false,
+              "operator": "regex"
+            }
+          ],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": false
+        },
+        {
+          "uuid": "5b1921e1-a2c6-4d27-bd6b-3df7cfa4c7d5",
           "body": "{\n  \"statusCode\": 400,\n  \"data\": {\n    \"title\": \"Missing parameters\",\n    \"description\": \"Maaf, Missing parameters\",\n    \"image\": \"https://res.cloudinary.com/dbw2gd4m8/image/upload/v1689493869/Failed-Error-General_bzahbu.png\",\n    \"title_button\": \"OK\",\n    \"button_test_id\": \"1\",\n    \"is_scan\": true\n  }\n}",
           "latency": 0,
           "statusCode": 400,
@@ -145,7 +278,11 @@
   "rootChildren": [
     {
       "type": "route",
-      "uuid": "e4f10fbd-659d-4f13-a749-2beab25e3bd0"
+      "uuid": "b10237b7-2431-4517-89a5-4c21a098636d"
+    },
+    {
+      "type": "route",
+      "uuid": "5a631c21-7329-41a0-a234-7fa63df936ea"
     }
   ],
   "proxyMode": false,
@@ -181,7 +318,7 @@
   ],
   "data": [
     {
-      "uuid": "220529b9-a302-42b3-9ec7-265c97a3deb4",
+      "uuid": "94c9a910-fcc2-44fb-b091-4caa3210d769",
       "id": "1fdx",
       "name": "Users",
       "documentation": "",
