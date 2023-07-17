@@ -145,8 +145,8 @@
       "uuid": "5a631c21-7329-41a0-a234-7fa63df936ea",
       "type": "http",
       "documentation": "QRIS Inquiry",
-      "method": "get",
-      "endpoint": "inquiry",
+      "method": "post",
+      "endpoint": "inquiry2",
       "responses": [
         {
           "uuid": "ff0cb53f-e8a6-426a-abd9-2a6dea435b24",
