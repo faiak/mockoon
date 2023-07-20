@@ -1,1 +1,595 @@
-{"uuid":"44f8e007-d63d-45a4-8a89-99dfeefaf1e4","lastMigration":27,"name":"mockoon-qris","endpointPrefix":"","latency":0,"port":3000,"hostname":"","folders":[],"routes":[{"uuid":"b10237b7-2431-4517-89a5-4c21a098636d","type":"http","documentation":"QRIS Inquiry","method":"post","endpoint":"qris/inquiry","responses":[{"uuid":"f54cff14-e1b2-4e76-9a74-435a5e53d875","body":"{\n  \"statusCode\": 0,\n  \"data\": {\n    \"type\": \"DYNAMIC\",\n    \"amount\": 25000,\n    \"storeLabel\": \"MCD\",\n    \"merchantCity\": \"Jakarta\",\n    \"acquirerName\": \"TESTES\",\n    \"merchantPan\": \"97491230237495028756\",\n    \"terminalId\": \"FDHLL20951\"\n  }\n}","latency":0,"statusCode":200,"label":"Success Dynamic QRIS","headers":[],"bodyType":"INLINE","filePath":"","databucketID":"","sendFileAsBody":false,"rules":[{"target":"body","modifier":"qrText","value":"DYNAMIC_MCD","invert":false,"operator":"equals"}],"rulesOperator":"OR","disableTemplating":false,"fallbackTo404":false,"default":false},{"uuid":"c54777ff-5c7f-4912-82c8-39d30a888655","body":"{\n  \"statusCode\": 0,\n  \"data\": {\n    \"type\": \"STATIC\",\n    \"amount\": null,\n    \"storeLabel\": \"KFC\",\n    \"merchantCity\": \"Jakarta\",\n    \"acquirerName\": \"GAJA\",\n    \"merchantPan\": \"97491230237495028756\",\n    \"terminalId\": \"FDHLL20951\"\n  }\n}","latency":0,"statusCode":200,"label":"Success Static QRIS","headers":[],"bodyType":"INLINE","filePath":"","databucketID":"","sendFileAsBody":false,"rules":[{"target":"body","modifier":"qrText","value":"STATIC_KFC","invert":false,"operator":"equals"}],"rulesOperator":"OR","disableTemplating":false,"fallbackTo404":false,"default":false},{"uuid":"690ac2b5-56ee-4536-8db6-3fa517c50898","body":"{\n  \"statusCode\": 400,\n  \"data\": {\n    \"title\": \"Pembayaran Tip Gagal\",\n    \"description\": \"Maaf, pembayaran tip belum bisa dilakukan\",\n    \"image\": \"https://res.cloudinary.com/dbw2gd4m8/image/upload/v1689493869/Failed-Error-General_bzahbu.png\",\n    \"title_button\": \"OK\",\n    \"button_test_id\": \"1\",\n    \"is_scan\": true\n  }\n}","latency":0,"statusCode":400,"label":"Tip Failed","headers":[],"bodyType":"INLINE","filePath":"","databucketID":"","sendFileAsBody":false,"rules":[{"target":"body","modifier":"qrText","value":"TIP_FAILED","invert":false,"operator":"equals"}],"rulesOperator":"OR","disableTemplating":false,"fallbackTo404":false,"default":false},{"uuid":"61623f34-db88-4405-848c-216062c07706","body":"{\n  \"statusCode\": 400,\n  \"data\": {\n    \"title\": \"Merchant Tidak Ditemukan\",\n    \"description\": \"Maaf, kode QR merchant ini tidak ditemukan. Cek ulang kode QR merchant, ya!\",\n    \"image\": \"https://res.cloudinary.com/dbw2gd4m8/image/upload/v1689493570/QRis_not_Found_1_mzd2dj.png\",\n    \"title_button\": \"Scan Ulang\",\n    \"button_test_id\": \"1\",\n    \"is_scan\": true\n  }\n}","latency":0,"statusCode":400,"label":"Merchant Not Found","headers":[],"bodyType":"INLINE","filePath":"","databucketID":"","sendFileAsBody":false,"rules":[{"target":"body","modifier":"qrText","value":"[\\s\\S]*","invert":false,"operator":"regex"}],"rulesOperator":"OR","disableTemplating":false,"fallbackTo404":false,"default":false},{"uuid":"5519aa92-580c-4d5c-9c67-35a9714f4fc7","body":"{\n  \"statusCode\": 400,\n  \"data\": {\n    \"title\": \"Missing parameters\",\n    \"description\": \"Maaf, Missing parameters\",\n    \"image\": \"https://res.cloudinary.com/dbw2gd4m8/image/upload/v1689493869/Failed-Error-General_bzahbu.png\",\n    \"title_button\": \"OK\",\n    \"button_test_id\": \"1\",\n    \"is_scan\": true\n  }\n}","latency":0,"statusCode":400,"label":"Bad Request - Missing parameters","headers":[{"key":"","value":""}],"bodyType":"INLINE","filePath":"","databucketID":"","sendFileAsBody":false,"rules":[],"rulesOperator":"OR","disableTemplating":false,"fallbackTo404":false,"default":true}],"enabled":true,"responseMode":null}],"rootChildren":[{"type":"route","uuid":"b10237b7-2431-4517-89a5-4c21a098636d"}],"proxyMode":false,"proxyHost":"","proxyRemovePrefix":false,"tlsOptions":{"enabled":false,"type":"CERT","pfxPath":"","certPath":"","keyPath":"","caPath":"","passphrase":""},"cors":true,"headers":[{"key":"Content-Type","value":"application/json"}],"proxyReqHeaders":[{"key":"","value":""}],"proxyResHeaders":[{"key":"","value":""}],"data":[{"uuid":"94c9a910-fcc2-44fb-b091-4caa3210d769","id":"1fdx","name":"Users","documentation":"","value":"[\n  {{#repeat 50}}\n  {\n    \"id\": \"{{faker 'datatype.uuid'}}\",\n    \"username\": \"{{faker 'internet.userName'}}\"\n  }\n  {{/repeat}}\n]"}]}
+{
+  "uuid": "44f8e007-d63d-45a4-8a89-99dfeefaf1e4",
+  "lastMigration": 27,
+  "name": "QRIS",
+  "endpointPrefix": "",
+  "latency": 0,
+  "port": 8083,
+  "hostname": "",
+  "folders": [
+    {
+      "uuid": "bd7e5f0f-1b5f-4aa6-868e-ee88a2bf87e4",
+      "name": "Salman",
+      "collapsed": false,
+      "children": [
+        {
+          "type": "route",
+          "uuid": "7a455634-b547-415c-8dc3-39dcec6abadd"
+        },
+        {
+          "type": "route",
+          "uuid": "8629afcc-63a9-401e-b526-3e7997519696"
+        },
+        {
+          "type": "route",
+          "uuid": "8aae1db2-6d5d-45c3-aa86-72c705cd37e9"
+        }
+      ]
+    }
+  ],
+  "routes": [
+    {
+      "uuid": "b10237b7-2431-4517-89a5-4c21a098636d",
+      "type": "http",
+      "documentation": "QRIS Inquiry",
+      "method": "post",
+      "endpoint": "qris/inquiry",
+      "responses": [
+        {
+          "uuid": "f54cff14-e1b2-4e76-9a74-435a5e53d875",
+          "body": "{\n  \"statusCode\": 0,\n  \"data\": {\n    \"type\": \"DYNAMIC\",\n    \"amount\": 25000,\n    \"storeLabel\": \"MCDEEE\",\n    \"merchantCity\": \"Jakarta\",\n    \"acquirerName\": \"TESTES\",\n    \"merchantPan\": \"97491230237495028756\",\n    \"terminalId\": \"FDHLL20951\"\n  }\n}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "Success Dynamic QRIS",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [
+            {
+              "target": "body",
+              "modifier": "qrText",
+              "value": "DYNAMIC_MCD",
+              "invert": false,
+              "operator": "equals"
+            }
+          ],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": false
+        },
+        {
+          "uuid": "c54777ff-5c7f-4912-82c8-39d30a888655",
+          "body": "{\n  \"statusCode\": 0,\n  \"data\": {\n    \"type\": \"STATIC\",\n    \"amount\": null,\n    \"storeLabel\": \"KFC\",\n    \"merchantCity\": \"Jakarta\",\n    \"acquirerName\": \"GAJA\",\n    \"merchantPan\": \"97491230237495028756\",\n    \"terminalId\": \"FDHLL20951\"\n  }\n}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "Success Static QRIS",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [
+            {
+              "target": "body",
+              "modifier": "qrText",
+              "value": "STATIC_KFC",
+              "invert": false,
+              "operator": "equals"
+            }
+          ],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": false
+        },
+        {
+          "uuid": "690ac2b5-56ee-4536-8db6-3fa517c50898",
+          "body": "{\n  \"statusCode\": 400,\n  \"data\": {\n    \"title\": \"Pembayaran Tip Gagal\",\n    \"description\": \"Maaf, pembayaran tip belum bisa dilakukan\",\n    \"image\": \"https://res.cloudinary.com/dbw2gd4m8/image/upload/v1689493869/Failed-Error-General_bzahbu.png\",\n    \"title_button\": \"OK\",\n    \"button_test_id\": \"1\",\n    \"is_scan\": true\n  }\n}",
+          "latency": 0,
+          "statusCode": 400,
+          "label": "Tip Failed",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [
+            {
+              "target": "body",
+              "modifier": "qrText",
+              "value": "TIP_FAILED",
+              "invert": false,
+              "operator": "equals"
+            }
+          ],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": false
+        },
+        {
+          "uuid": "61623f34-db88-4405-848c-216062c07706",
+          "body": "{\n  \"statusCode\": 400,\n  \"data\": {\n    \"title\": \"Merchant Tidak Ditemukan\",\n    \"description\": \"Maaf, kode QR merchant ini tidak ditemukan. Cek ulang kode QR merchant, ya!\",\n    \"image\": \"https://res.cloudinary.com/dbw2gd4m8/image/upload/v1689493570/QRis_not_Found_1_mzd2dj.png\",\n    \"title_button\": \"Scan Ulang\",\n    \"button_test_id\": \"1\",\n    \"is_scan\": true\n  }\n}",
+          "latency": 0,
+          "statusCode": 400,
+          "label": "Merchant Not Found",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [
+            {
+              "target": "body",
+              "modifier": "qrText",
+              "value": "[\\s\\S]*",
+              "invert": false,
+              "operator": "regex"
+            }
+          ],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": false
+        },
+        {
+          "uuid": "5519aa92-580c-4d5c-9c67-35a9714f4fc7",
+          "body": "{\n  \"statusCode\": 400,\n  \"data\": {\n    \"title\": \"Missing parameters\",\n    \"description\": \"Maaf, Missing parameters\",\n    \"image\": \"https://res.cloudinary.com/dbw2gd4m8/image/upload/v1689493869/Failed-Error-General_bzahbu.png\",\n    \"title_button\": \"OK\",\n    \"button_test_id\": \"1\",\n    \"is_scan\": true\n  }\n}",
+          "latency": 0,
+          "statusCode": 400,
+          "label": "Bad Request - Missing parameters",
+          "headers": [
+            {
+              "key": "",
+              "value": ""
+            }
+          ],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true
+        }
+      ],
+      "enabled": true,
+      "responseMode": null
+    },
+    {
+      "uuid": "e2cb32dd-33d5-406c-95db-1b1ed5685c84",
+      "type": "http",
+      "documentation": "QRIS validate",
+      "method": "post",
+      "endpoint": "qris/validate",
+      "responses": [
+        {
+          "uuid": "30423437-5e3f-49a2-822e-f21ace57d7c7",
+          "body": "{\n  \"statusCode\": 0,\n  \"data\": {\n    \"resp\": \"LIMIT_EXCEED\", \n  }\n}",
+          "latency": 0,
+          "statusCode": 400,
+          "label": "Success Dynamic QRIS",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [
+            {
+              "target": "body",
+              "modifier": "amount",
+              "value": "102",
+              "invert": false,
+              "operator": "equals"
+            }
+          ],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": false
+        },
+        {
+          "uuid": "dbf7decc-7ec2-4caa-b06a-86105313fc62",
+          "body": "{\n  \"statusCode\": 0,\n  \"data\": {\n    \"type\": \"STATIC\",\n    \"amount\": null,\n    \"storeLabel\": \"KFC\",\n    \"merchantCity\": \"Jakarta\",\n    \"acquirerName\": \"GAJA\",\n    \"merchantPan\": \"97491230237495028756\",\n    \"terminalId\": \"FDHLL20951\"\n  }\n}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "Success Static QRIS",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [
+            {
+              "target": "body",
+              "modifier": "qrText",
+              "value": "STATIC_KFC",
+              "invert": false,
+              "operator": "equals"
+            }
+          ],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": false
+        },
+        {
+          "uuid": "c4561bb2-4106-4dc5-9849-7e5e719b668c",
+          "body": "{\n  \"statusCode\": 400,\n  \"data\": {\n    \"title\": \"Pembayaran Tip Gagal\",\n    \"description\": \"Maaf, pembayaran tip belum bisa dilakukan\",\n    \"image\": \"https://res.cloudinary.com/dbw2gd4m8/image/upload/v1689493869/Failed-Error-General_bzahbu.png\",\n    \"title_button\": \"OK\",\n    \"button_test_id\": \"1\",\n    \"is_scan\": true\n  }\n}",
+          "latency": 0,
+          "statusCode": 400,
+          "label": "Tip Failed",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [
+            {
+              "target": "body",
+              "modifier": "qrText",
+              "value": "TIP_FAILED",
+              "invert": false,
+              "operator": "equals"
+            }
+          ],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": false
+        },
+        {
+          "uuid": "3f0fe468-c1a8-4b3c-a40d-d9b06a9be5a8",
+          "body": "{\n  \"statusCode\": 400,\n  \"data\": {\n    \"title\": \"Merchant Tidak Ditemukan\",\n    \"description\": \"Maaf, kode QR merchant ini tidak ditemukan. Cek ulang kode QR merchant, ya!\",\n    \"image\": \"https://res.cloudinary.com/dbw2gd4m8/image/upload/v1689493570/QRis_not_Found_1_mzd2dj.png\",\n    \"title_button\": \"Scan Ulang\",\n    \"button_test_id\": \"1\",\n    \"is_scan\": true\n  }\n}",
+          "latency": 0,
+          "statusCode": 400,
+          "label": "Merchant Not Found",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [
+            {
+              "target": "body",
+              "modifier": "qrText",
+              "value": "[\\s\\S]*",
+              "invert": false,
+              "operator": "regex"
+            }
+          ],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": false
+        },
+        {
+          "uuid": "820bfdb5-d0c9-4b65-9646-b1f9cfce9ddc",
+          "body": "{\n  \"statusCode\": 400,\n  \"data\": {\n    \"title\": \"Missing parameters\",\n    \"description\": \"Maaf, Missing parameters\",\n    \"image\": \"https://res.cloudinary.com/dbw2gd4m8/image/upload/v1689493869/Failed-Error-General_bzahbu.png\",\n    \"title_button\": \"OK\",\n    \"button_test_id\": \"1\",\n    \"is_scan\": true\n  }\n}",
+          "latency": 0,
+          "statusCode": 400,
+          "label": "Bad Request - Missing parameters",
+          "headers": [
+            {
+              "key": "",
+              "value": ""
+            }
+          ],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true
+        }
+      ],
+      "enabled": true,
+      "responseMode": null
+    },
+    {
+      "uuid": "7a455634-b547-415c-8dc3-39dcec6abadd",
+      "type": "http",
+      "documentation": "",
+      "method": "get",
+      "endpoint": "salman/qris/detail",
+      "responses": [
+        {
+          "uuid": "60ac9f2f-df2b-4993-8f31-0ebbc32fa246",
+          "body": "{}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true
+        }
+      ],
+      "enabled": true,
+      "responseMode": null
+    },
+    {
+      "uuid": "8629afcc-63a9-401e-b526-3e7997519696",
+      "type": "http",
+      "documentation": "",
+      "method": "get",
+      "endpoint": "salman/qris/transaction",
+      "responses": [
+        {
+          "uuid": "6e938db6-1796-4b6b-8b12-54caee944535",
+          "body": "{\n    \"statusCode\": \"00\",\n    \"data\": {\n        \"totalElement\": 2952,\n        \"totalPage\": 296,\n        \"totalAmountShown\": 309000,\n        \"totalElementShown\": 10,\n        \"content\": [\n            {\n              \"createdTime\": \"2022-07-12T00:03:04.608+07:00\",\n              \"mambuStatus\": \"SUCCESS\",\n              \"transactionId\": \"1c136519ccd2b5c2\",\n              \"reffID\": \"168968224433528c43f48\",\n              \"transactionType\": \"QRIS_MPM\",\n              \"transactionStatus\": \"SUCCESS\",\n              \"rc\": \"00\",\n              \"customerPAN\": \"9360068901000059491\",\n              \"hijraID\": \"userstg1256\",\n              \"accountNumber\": \"110100006377\",\n              \"customerName\": \"QAE Hijra 079\",\n              \"MCC\": \"5812\",\n              \"merchantName\": \"GEROBAK BAKSO JONO 1\",\n              \"convenienceFee\": \"5000\",\n              \"transactionAmount\": \"24850\",\n              \"debitedAmount\": \"30000\",\n            },\n        ]\n    }\n    \"statusDescription\": \"Success get In App\",\n    \"timestamp\": \"2023-07-13T11:09:59.811+07:00\",\n}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [
+            {
+              "target": "query",
+              "modifier": "transactionStatus",
+              "value": "",
+              "invert": false,
+              "operator": "regex"
+            }
+          ],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true
+        },
+        {
+          "uuid": "2936d9a9-f274-42b6-8be5-d7fba57413dc",
+          "body": "{\r\n    \"statusCode\": \"00\",\r\n    \"data\": {\r\n        \"totalElement\": 2952,\r\n        \"totalPage\": 296,\r\n        \"totalAmountShown\": 309000,\r\n        \"totalElementShown\": 10,\r\n        \"content\": []\r\n    }\r\n    \"statusDescription\": \"Success get In App\",\r\n    \"timestamp\": \"2023-07-13T11:09:59.811+07:00\",\r\n}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [
+            {
+              "target": "query",
+              "modifier": "",
+              "value": "",
+              "invert": true,
+              "operator": "null"
+            }
+          ],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": false
+        },
+        {
+          "uuid": "d4c56c83-7090-4e01-9a5e-b57c8c64f9fa",
+          "body": "{\n    \"timestamp\": \"2023-07-19T17:09:00.562+07:00\",\n    \"statusCode\": \"23\",\n    \"statusDescription\": \"Fatal Error please call administrator\",\n    \"data\": \"\"\n}",
+          "latency": 0,
+          "statusCode": 400,
+          "label": "",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": false
+        },
+        {
+          "uuid": "a677c2ec-1437-4cb1-93df-6ad11e262705",
+          "body": "{\n    \"timestamp\": 1689828434872,\n    \"statusCode\": \"JWT token expired\",\n    \"statusDescription\": \"\",\n    \"data\": false\n}",
+          "latency": 0,
+          "statusCode": 401,
+          "label": "",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": false
+        },
+        {
+          "uuid": "0a9bdce4-815a-432f-ba53-ee2963489fc3",
+          "body": "{\n    \"timestamp\": \"2023-07-19T17:09:00.562+07:00\",\n    \"statusCode\": \"23\",\n    \"statusDescription\": \"Fatal Error please call administrator\",\n    \"data\": \"\"\n}",
+          "latency": 0,
+          "statusCode": 500,
+          "label": "",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": false
+        }
+      ],
+      "enabled": true,
+      "responseMode": null
+    },
+    {
+      "uuid": "8aae1db2-6d5d-45c3-aa86-72c705cd37e9",
+      "type": "http",
+      "documentation": "",
+      "method": "get",
+      "endpoint": "salman/qris/download-transaction",
+      "responses": [
+        {
+          "uuid": "baffc978-cc4e-4ecd-9f4d-bc055f274302",
+          "body": "{\n    \"statusCode\": \"00\",\n    \"data\": [\n        {\n          \"createdTime\": \"2022-07-12T00:03:04.608+07:00\",\n          \"mambuStatus\": \"SUCCESS\",\n          \"transactionId\": \"1c136519ccd2b5c2\",\n          \"reffID\": \"168968224433528c43f48\",\n          \"transactionType\": \"QRIS_MPM\",\n          \"transactionStatus\": \"SUCCESS\",\n          \"rc\": \"00\",\n          \"customerPAN\": \"9360068901000059491\",\n          \"hijraID\": \"userstg1256\",\n          \"accountNumber\": \"110100006377\",\n          \"customerName\": \"QAE Hijra 079\",\n          \"MCC\": \"5812\",\n          \"merchantName\": \"GEROBAK BAKSO JONO 1\",\n          \"convenienceFee\": \"5000\",\n          \"transactionAmount\": \"24850\",\n          \"debitedAmount\": \"30000\",\n        },\n        {\n          \"createdTime\": \"2022-07-12T00:03:04.608+07:00\",\n          \"mambuStatus\": \"SUCCESS\",\n          \"transactionId\": \"1c136519ccd2b5c2\",\n          \"reffID\": \"168968224433528c43f48\",\n          \"transactionType\": \"QRIS_MPM\",\n          \"transactionStatus\": \"SUCCESS\",\n          \"rc\": \"00\",\n          \"customerPAN\": \"9360068901000059491\",\n          \"hijraID\": \"userstg1256\",\n          \"accountNumber\": \"110100006377\",\n          \"customerName\": \"QAE Hijra 079\",\n          \"MCC\": \"5812\",\n          \"merchantName\": \"GEROBAK BAKSO JONO 1\",\n          \"convenienceFee\": \"5000\",\n          \"transactionAmount\": \"24850\",\n          \"debitedAmount\": \"30000\",\n        }\n    ],\n    \"statusDescription\": \"Success get In App\",\n    \"timestamp\": \"2023-07-13T11:09:59.811+07:00\",\n}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true
+        },
+        {
+          "uuid": "ce300295-a40b-454c-9dfb-287f83a62d8a",
+          "body": "{\r\n    \"statusCode\": \"00\",\r\n    \"data\": {\r\n        \"totalElement\": 2952,\r\n        \"totalPage\": 296,\r\n        \"totalAmountShown\": 309000,\r\n        \"totalElementShown\": 10,\r\n        \"content\": []\r\n    }\r\n    \"statusDescription\": \"Success get In App\",\r\n    \"timestamp\": \"2023-07-13T11:09:59.811+07:00\",\r\n}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [
+            {
+              "target": "query",
+              "modifier": "test",
+              "value": "",
+              "invert": false,
+              "operator": "regex"
+            }
+          ],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": false
+        },
+        {
+          "uuid": "3fb063a4-feb6-4270-8f09-1c14165336b0",
+          "body": "{\n    \"timestamp\": \"2023-07-19T17:09:00.562+07:00\",\n    \"statusCode\": \"23\",\n    \"statusDescription\": \"Fatal Error please call administrator\",\n    \"data\": \"\"\n}",
+          "latency": 0,
+          "statusCode": 400,
+          "label": "",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": false
+        },
+        {
+          "uuid": "31c102df-25c0-49f1-bc3b-b89cb97f97a3",
+          "body": "{\n    \"timestamp\": \"2023-07-19T17:09:00.562+07:00\",\n    \"statusCode\": \"23\",\n    \"statusDescription\": \"Fatal Error please call administrator\",\n    \"data\": \"\"\n}",
+          "latency": 0,
+          "statusCode": 500,
+          "label": "",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": false
+        }
+      ],
+      "enabled": true,
+      "responseMode": null
+    }
+  ],
+  "rootChildren": [
+    {
+      "type": "route",
+      "uuid": "b10237b7-2431-4517-89a5-4c21a098636d"
+    },
+    {
+      "type": "route",
+      "uuid": "e2cb32dd-33d5-406c-95db-1b1ed5685c84"
+    },
+    {
+      "type": "folder",
+      "uuid": "bd7e5f0f-1b5f-4aa6-868e-ee88a2bf87e4"
+    }
+  ],
+  "proxyMode": true,
+  "proxyHost": "http://localhost:8083",
+  "proxyRemovePrefix": false,
+  "tlsOptions": {
+    "enabled": false,
+    "type": "CERT",
+    "pfxPath": "",
+    "certPath": "",
+    "keyPath": "",
+    "caPath": "",
+    "passphrase": ""
+  },
+  "cors": true,
+  "headers": [
+    {
+      "key": "Content-Type",
+      "value": "application/json"
+    },
+    {
+      "key": "Access-Control-Allow-Origin",
+      "value": "*"
+    },
+    {
+      "key": "Access-Control-Allow-Methods",
+      "value": "GET,POST,PUT,PATCH,DELETE,HEAD,OPTIONS"
+    },
+    {
+      "key": "Access-Control-Allow-Headers",
+      "value": "Content-Type, Origin, Accept, Authorization, Content-Length, X-Requested-With"
+    },
+    {
+      "key": "Access-Control-Expose-Headers",
+      "value": "Allow, Content-Encoding, Content-Length, Content-Type, ETag, Expires, Last-Modified, Location, Server, Vary, Authorization"
+    }
+  ],
+  "proxyReqHeaders": [
+    {
+      "key": "",
+      "value": ""
+    }
+  ],
+  "proxyResHeaders": [
+    {
+      "key": "",
+      "value": ""
+    }
+  ],
+  "data": [
+    {
+      "uuid": "94c9a910-fcc2-44fb-b091-4caa3210d769",
+      "id": "1fdx",
+      "name": "Users",
+      "documentation": "",
+      "value": "[\n  {{#repeat 50}}\n  {\n    \"id\": \"{{faker 'datatype.uuid'}}\",\n    \"username\": \"{{faker 'internet.userName'}}\"\n  }\n  {{/repeat}}\n]"
+    }
+  ]
+}
