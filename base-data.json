@@ -1,1 +1,902 @@
-{"uuid":"44f8e007-d63d-45a4-8a89-99dfeefaf1e4","lastMigration":27,"name":"mockoon-qris","endpointPrefix":"","latency":0,"port":3000,"hostname":"","folders":[],"routes":[{"uuid":"b10237b7-2431-4517-89a5-4c21a098636d","type":"http","documentation":"QRIS Inquiry","method":"post","endpoint":"qris/inquiry","responses":[{"uuid":"f54cff14-e1b2-4e76-9a74-435a5e53d875","body":"{\n  \"statusCode\": \"00\",\n  \"data\": {\n    \"type\": \"DYNAMIC\",\n    \"amount\": 0,\n    \"storeLabel\": \"MCDEEE\",\n    \"merchantCity\": \"Jakarta\",\n    \"acquirerName\": \"TESTES\",\n    \"merchantPan\": \"97491230237495028756\",\n    \"terminalId\": \"FDHLL20951\"\n  }\n}","latency":0,"statusCode":200,"label":"Success Dynamic QRIS","headers":[],"bodyType":"INLINE","filePath":"","databucketID":"","sendFileAsBody":false,"rules":[{"target":"body","modifier":"qrText","value":"DYNAMIC_MCD","invert":false,"operator":"equals"}],"rulesOperator":"OR","disableTemplating":false,"fallbackTo404":false,"default":false},{"uuid":"c54777ff-5c7f-4912-82c8-39d30a888655","body":"{\n  \"statusCode\": \"00\",\n  \"data\": {\n    \"type\": \"STATIC\",\n    \"amount\": 50000,\n    \"storeLabel\": \"KFC\",\n    \"merchantCity\": \"Jakarta\",\n    \"acquirerName\": \"GAJA\",\n    \"merchantPan\": \"97491230237495028756\",\n    \"terminalId\": \"FDHLL20951\"\n  }\n}","latency":0,"statusCode":200,"label":"Success Static QRIS","headers":[],"bodyType":"INLINE","filePath":"","databucketID":"","sendFileAsBody":false,"rules":[{"target":"body","modifier":"qrText","value":"STATIC_KFC","invert":false,"operator":"equals"}],"rulesOperator":"OR","disableTemplating":false,"fallbackTo404":false,"default":false},{"uuid":"690ac2b5-56ee-4536-8db6-3fa517c50898","body":"{\n  \"statusCode\": \"400\",\n  \"data\": {\n    \"title\": \"Pembayaran Tip Gagal\",\n    \"description\": \"Maaf, pembayaran tip belum bisa dilakukan\",\n    \"image\": \"https://res.cloudinary.com/dbw2gd4m8/image/upload/v1689493869/Failed-Error-General_bzahbu.png\",\n    \"buttonTitle\": \"OK\"\n  }\n}","latency":0,"statusCode":400,"label":"Tip Failed","headers":[],"bodyType":"INLINE","filePath":"","databucketID":"","sendFileAsBody":false,"rules":[{"target":"body","modifier":"qrText","value":"TIP_FAILED","invert":false,"operator":"equals"}],"rulesOperator":"OR","disableTemplating":false,"fallbackTo404":false,"default":false},{"uuid":"61623f34-db88-4405-848c-216062c07706","body":"{\n  \"statusCode\": \"400\",\n  \"data\": {\n    \"title\": \"Merchant Tidak Ditemukan\",\n    \"description\": \"Maaf, kode QR merchant ini tidak ditemukan. Cek ulang kode QR merchant, ya!\",\n    \"image\": \"https://res.cloudinary.com/dbw2gd4m8/image/upload/v1689493570/QRis_not_Found_1_mzd2dj.png\",\n    \"buttonTitle\": \"Scan Ulang\"\n  }\n}","latency":0,"statusCode":400,"label":"Merchant Not Found","headers":[],"bodyType":"INLINE","filePath":"","databucketID":"","sendFileAsBody":false,"rules":[{"target":"body","modifier":"qrText","value":"[\\s\\S]*","invert":false,"operator":"regex"}],"rulesOperator":"OR","disableTemplating":false,"fallbackTo404":false,"default":false},{"uuid":"bea1f68a-a45c-4ed6-90ee-56837d398d5f","body":"{\n  \"statusCode\": \"400\",\n  \"data\": {\n    \"title\": \"Merchant ID Tidak Ditemukan\",\n    \"description\": \"Yuk, pastikan kode QR benar dan coba lagi\",\n    \"image\": \"https://res.cloudinary.com/dbw2gd4m8/image/upload/v1689493570/QRis_not_Found_1_mzd2dj.png\",\n    \"buttonTitle\": \"Scan Ulang\"\n  }\n}","latency":0,"statusCode":400,"label":"Merchant ID Not Valid","headers":[],"bodyType":"INLINE","filePath":"","databucketID":"","sendFileAsBody":false,"rules":[{"target":"body","modifier":"qrText","value":"MERCHANT_ID_INVALID","invert":false,"operator":"equals"}],"rulesOperator":"OR","disableTemplating":false,"fallbackTo404":false,"default":false},{"uuid":"5519aa92-580c-4d5c-9c67-35a9714f4fc7","body":"{\n  \"statusCode\": \"400\",\n  \"data\": {\n    \"title\": \"Missing parameters\",\n    \"description\": \"Maaf, Missing parameters\",\n    \"image\": \"https://res.cloudinary.com/dbw2gd4m8/image/upload/v1689493869/Failed-Error-General_bzahbu.png\",\n    \"buttonTitle\": \"OK\"\n  }\n}","latency":0,"statusCode":400,"label":"Bad Request - Missing parameters","headers":[{"key":"","value":""}],"bodyType":"INLINE","filePath":"","databucketID":"","sendFileAsBody":false,"rules":[],"rulesOperator":"OR","disableTemplating":false,"fallbackTo404":false,"default":true}],"enabled":true,"responseMode":null},{"uuid":"e2cb32dd-33d5-406c-95db-1b1ed5685c84","type":"http","documentation":"QRIS validate","method":"post","endpoint":"digital/validate-debit","responses":[{"uuid":"30423437-5e3f-49a2-822e-f21ace57d7c7","body":"{\n  \"statusCode\": \"00\",\n  \"data\": {\n    \"auth\": {\n      \"biometrics\": true,\n      \"exceedLimit\": false,\n      \"password\": false,\n      \"pin\": true\n    }, \n  }\n}","latency":0,"statusCode":200,"label":"Success Validate QRIS","headers":[],"bodyType":"INLINE","filePath":"","databucketID":"","sendFileAsBody":false,"rules":[{"target":"body","modifier":"amount","value":"102","invert":false,"operator":"equals"},{"target":"body","modifier":"boxId","value":"123","invert":false,"operator":"equals"}],"rulesOperator":"AND","disableTemplating":false,"fallbackTo404":false,"default":true},{"uuid":"dbf7decc-7ec2-4caa-b06a-86105313fc62","body":"{\n  \"statusCode\": \"400\",\n  \"data\": {\n    \"description\": \"Maksimal Pembayaran Rp20.000.000 satu hari\",\n    \"type\": \"field\"\n  }\n}","latency":0,"statusCode":400,"label":"Failed Validate QRIS - Exceed Limit Daily","headers":[],"bodyType":"INLINE","filePath":"","databucketID":"","sendFileAsBody":false,"rules":[{"target":"body","modifier":"qrText","value":"EXCEED_LIMIT_DAILY","invert":false,"operator":"equals"}],"rulesOperator":"OR","disableTemplating":false,"fallbackTo404":false,"default":false},{"uuid":"c4561bb2-4106-4dc5-9849-7e5e719b668c","body":"{\n  \"statusCode\": \"400\",\n  \"data\": {\n    \"description\": \"Maksimal Rp1.000.000 sekali pembayaran\",\n    \"type\": \"field\"\n  }\n}","latency":0,"statusCode":400,"label":"Failed Validate QRIS - Exceed Limit Transaction","headers":[],"bodyType":"INLINE","filePath":"","databucketID":"","sendFileAsBody":false,"rules":[{"target":"body","modifier":"qrText","value":"EXCEED_LIMIT_TRANSACTION","invert":false,"operator":"equals"}],"rulesOperator":"OR","disableTemplating":false,"fallbackTo404":false,"default":false},{"uuid":"3f0fe468-c1a8-4b3c-a40d-d9b06a9be5a8","body":"{\n  \"statusCode\": \"400\",\n  \"data\": {\n    \"description\": \"Koneksi terputus. Silakan cek internet kamu dan coba lagi.\",\n    \"type\": \"toast\"\n  }\n}","latency":0,"statusCode":400,"label":"Failed Validate QRIS - Connection RTO","headers":[],"bodyType":"INLINE","filePath":"","databucketID":"","sendFileAsBody":false,"rules":[{"target":"body","modifier":"qrText","value":"CONNECTION_RTO","invert":false,"operator":"regex"}],"rulesOperator":"OR","disableTemplating":false,"fallbackTo404":false,"default":false}],"enabled":true,"responseMode":null},{"uuid":"c6478d63-ca88-4c71-b611-7b6000fd3d28","type":"http","documentation":"","method":"post","endpoint":"qris/pay","responses":[{"uuid":"be7f62e8-7f47-4896-b72d-ec29db55cabf","body":"{\n    \"statusCode\": 00,\n    \"data\": {\n            \"id\": \"test123\",\n            \"transactionId\": \"1c135c2f564fae17\",\n            \"createdDate\": \"2023-06-20T16:00:07.657+07:00\",\n            \"status\": \"Failed\",\n            \"statusDetail\": null,\n            \"recipientName\": \"To Me Coffee & Bakery\",\n            \"recipientLocation\": \"Jakarta\",\n            \"senderName\": \"Ahmad Zikri\",\n            \"senderBankName\": \"Hijra Bank\",\n            \"boxName\": \"Main Box\",\n            \"accountNumber\": \"110100006377\",\n            \"amount\": 25888,\n            \"acquirerName\": \"GAJA\",\n            \"merchantPAN\": \"97491230237495028756\",\n            \"terminalID\": \"FDHLL20951\",\n            \"customerPAN\": \"7865\",\n            \"reffId\": \"OSIDJNVOKNJANBVK\"\n    }\n}\n\n","latency":0,"statusCode":200,"label":"Success","headers":[],"bodyType":"INLINE","filePath":"","databucketID":"","sendFileAsBody":false,"rules":[{"target":"body","modifier":"qrText","value":"","invert":true,"operator":"null"},{"target":"body","modifier":"boxId","value":"","invert":true,"operator":"null"},{"target":"body","modifier":"amount","value":"[2-9]\\d+","invert":false,"operator":"regex"}],"rulesOperator":"AND","disableTemplating":false,"fallbackTo404":false,"default":true},{"uuid":"d047fdab-dfd2-408b-b626-14b039c78524","body":"{\n    \"statusCode\": 400,\n    \"data\": \n        {\n           \"title\": \"Bad Request\",\n            \"description\": \"The request was malformed or missing required parameters\",\n            \"image\": \"\",\n            \"buttonTitle\": \"OK\",\n            \"rescan\": false,\n            \"type\": \"TOAST\",\n        }\n}\n\n","latency":0,"statusCode":400,"label":"Bad Request","headers":[],"bodyType":"INLINE","filePath":"","databucketID":"","sendFileAsBody":false,"rules":[{"target":"body","modifier":"qrText","value":"","invert":false,"operator":"null"},{"target":"body","modifier":"boxId","value":"","invert":false,"operator":"null"}],"rulesOperator":"OR","disableTemplating":false,"fallbackTo404":false,"default":false},{"uuid":"b7cd2ccb-4be7-4cdb-8c12-42716b1d76ec","body":"{\n    \"statusCode\": 400,\n    \"data\": \n        {\n           \"title\": \"Bank Not Found\",\n            \"description\": \"The bank is not registered in the system. Check the bank details and try again.\",\n            \"image\": \"https://storage.googleapis.com/hijra-salman-assets/icon-errors/failed.png\",\n            \"buttonTitle\": \"OK\",\n            \"rescan\": false,\n            \"type\": \"POPUP\",\n        }\n}\n\n","latency":0,"statusCode":400,"label":"Bank Not Supported error","headers":[],"bodyType":"INLINE","filePath":"","databucketID":"","sendFileAsBody":false,"rules":[{"target":"body","modifier":"qrText","value":"STATIC_KFC","invert":false,"operator":"equals"},{"target":"body","modifier":"amount","value":"100","invert":false,"operator":"equals"}],"rulesOperator":"AND","disableTemplating":false,"fallbackTo404":false,"default":false},{"uuid":"b615b855-c150-4859-b7e7-cc7f9bae6942","body":"{\n    \"statusCode\": 400,\n    \"data\": \n        {\n           \"title\": \"Expired QR Code\",\n            \"description\": \"This QR code is no longer usable. Please try another QR code for your payment.\",\n            \"image\": \"https://storage.googleapis.com/hijra-salman-assets/icon-errors/failed.png\",\n            \"buttonTitle\": \"Scan Again\",\n            \"rescan\": true,\n            \"type\": \"POPUP\",\n        }\n}\n\n","latency":0,"statusCode":400,"label":"QR Expired error","headers":[],"bodyType":"INLINE","filePath":"","databucketID":"","sendFileAsBody":false,"rules":[{"target":"body","modifier":"qrText","value":"STATIC_KFC","invert":false,"operator":"equals"},{"target":"body","modifier":"amount","value":"101","invert":false,"operator":"equals"}],"rulesOperator":"AND","disableTemplating":false,"fallbackTo404":false,"default":false},{"uuid":"aa12c1a1-5faa-45c1-813d-9fd9cf5e2f96","body":"{\n    \"statusCode\": 400,\n    \"data\": \n        {\n           \"title\": \"Account Not Found\",\n            \"description\": \"This QR code is no longer usable. Please try another QR code for your payment.\",\n            \"image\": \"https://storage.googleapis.com/hijra-salman-assets/icon-errors/failed.png\",\n            \"buttonTitle\": \"OK\",\n            \"rescan\": false,\n            \"type\": \"POPUP\",\n        }\n}\n\n","latency":0,"statusCode":400,"label":"No Account","headers":[],"bodyType":"INLINE","filePath":"","databucketID":"","sendFileAsBody":false,"rules":[{"target":"body","modifier":"qrText","value":"STATIC_KFC","invert":false,"operator":"equals"},{"target":"body","modifier":"amount","value":"102","invert":false,"operator":"equals"}],"rulesOperator":"AND","disableTemplating":false,"fallbackTo404":false,"default":false},{"uuid":"a9c85a85-968a-4369-81cc-6446d1dcac59","body":"{\n    \"statusCode\": 400,\n    \"data\": \n        {\n           \"title\": \"Payment Process Failed\",\n            \"description\": \"Our system is undergoing maintenance. Please try again later.\",\n            \"image\": \"https://storage.googleapis.com/hijra-salman-assets/icon-errors/failed.png\",\n            \"buttonTitle\": \"OK\",\n            \"rescan\": false,\n            \"type\": \"POPUP\",\n        }\n}\n\n","latency":0,"statusCode":400,"label":"Link Down Error","headers":[],"bodyType":"INLINE","filePath":"","databucketID":"","sendFileAsBody":false,"rules":[{"target":"body","modifier":"qrText","value":"STATIC_KFC","invert":false,"operator":"equals"},{"target":"body","modifier":"amount","value":"103","invert":false,"operator":"equals"}],"rulesOperator":"AND","disableTemplating":false,"fallbackTo404":false,"default":false},{"uuid":"dffdda3e-b17b-44c8-bf9f-2da136f325cc","body":"{\n    \"statusCode\": 15,\n    \"data\": \n        {\n           \"title\": \"Pin Locked\",\n            \"description\": \"Your account is locked\",\n            \"image\": \"\",\n            \"buttonTitle\": \"\",\n            \"rescan\": false,\n            \"type\": \"TOAST\",\n        }\n}\n\n","latency":0,"statusCode":400,"label":"Pin Locked","headers":[],"bodyType":"INLINE","filePath":"","databucketID":"","sendFileAsBody":false,"rules":[{"target":"body","modifier":"qrText","value":"STATIC_KFC","invert":false,"operator":"equals"},{"target":"body","modifier":"amount","value":"104","invert":false,"operator":"equals"}],"rulesOperator":"AND","disableTemplating":false,"fallbackTo404":false,"default":false},{"uuid":"63024855-ef3e-4abc-b718-c4f6a3137b76","body":"{\n    \"statusCode\": 12,\n    \"data\": \n        {\n           \"title\": \"Wrong Pin/Password\",\n            \"description\": \"Wrong Pin/Password\",\n            \"image\": \"\",\n            \"buttonTitle\": \"\",\n            \"rescan\": false,\n            \"type\": \"TOAST\",\n        }\n}\n\n","latency":0,"statusCode":400,"label":"Wrong Pin/Password","headers":[],"bodyType":"INLINE","filePath":"","databucketID":"","sendFileAsBody":false,"rules":[{"target":"body","modifier":"qrText","value":"STATIC_KFC","invert":false,"operator":"equals"},{"target":"body","modifier":"amount","value":"105","invert":false,"operator":"equals"}],"rulesOperator":"AND","disableTemplating":false,"fallbackTo404":false,"default":false},{"uuid":"f039d8a7-f1d9-4813-9b23-57a05d6eb3b8","body":"{}","latency":0,"statusCode":401,"label":"Unauthorized","headers":[],"bodyType":"INLINE","filePath":"","databucketID":"","sendFileAsBody":false,"rules":[{"target":"body","modifier":"qrText","value":"STATIC_KFC","invert":false,"operator":"equals"},{"target":"body","modifier":"amount","value":"106","invert":false,"operator":"equals"}],"rulesOperator":"AND","disableTemplating":false,"fallbackTo404":false,"default":false},{"uuid":"96f6db8f-2780-4d6a-86b0-49d43109b1f4","body":"{}","latency":0,"statusCode":404,"label":"Not Found","headers":[],"bodyType":"INLINE","filePath":"","databucketID":"","sendFileAsBody":false,"rules":[{"target":"body","modifier":"qrText","value":"STATIC_KFC","invert":false,"operator":"equals"},{"target":"body","modifier":"amount","value":"107","invert":false,"operator":"equals"}],"rulesOperator":"AND","disableTemplating":false,"fallbackTo404":false,"default":false},{"uuid":"7de86b08-a405-475e-bf32-10b70975b6dc","body":"{}","latency":0,"statusCode":500,"label":"Internal Server Error","headers":[],"bodyType":"INLINE","filePath":"","databucketID":"","sendFileAsBody":false,"rules":[{"target":"body","modifier":"qrText","value":"STATIC_KFC","invert":false,"operator":"equals"},{"target":"body","modifier":"amount","value":"108","invert":false,"operator":"equals"}],"rulesOperator":"AND","disableTemplating":false,"fallbackTo404":false,"default":false}],"enabled":true,"responseMode":null},{"uuid":"113eb45b-47da-4558-a661-bf0413159e34","type":"http","documentation":"","method":"get","endpoint":"qris/transaction","responses":[{"uuid":"3bdaa841-8bc4-4498-8938-148f66736e9a","body":"{\n    \"statusCode\": 00,\n    \"data\": {\n            \"id\": \"1\",\n            \"referenceId\": \"OSIDJNVOKNJANBVK\",\n            \"transactionId\": \"1c135c2f564fae17\",\n            \"createdDate\": \"2023-06-20T16:00:07.657+07:00\",\n            \"status\": \"Success\",\n            \"statusDetail\": null,\n            \"recipientName\": \"To Me Coffee & Bakery\",\n            \"recipientLocation\": \"Jakarta\",\n            \"senderName\": \"Ahmad Zikri\",\n            \"senderBankName\": \"Hijra Bank\",\n            \"boxName\": \"Main Box\",\n            \"accountNumber\": \"110100006377\",\n            \"amount\": 25888,\n            \"acquirerName\": \"GAJA\",\n            \"merchantPAN\": \"97491230237495028756\",\n            \"terminalID\": \"FDHLL20951\",\n            \"customerPAN\": \"7865\"\n    }\n}","latency":0,"statusCode":200,"label":"Success","headers":[],"bodyType":"INLINE","filePath":"","databucketID":"","sendFileAsBody":false,"rules":[{"target":"query","modifier":"transactionId","value":"1","invert":false,"operator":"equals"}],"rulesOperator":"OR","disableTemplating":false,"fallbackTo404":false,"default":true},{"uuid":"03659893-5037-4da8-9edc-50d6973b07a8","body":"{\n    \"statusCode\": 00,\n    \"data\": {\n            \"id\": \"1\",\n            \"referenceId\": \"OSIDJNVOKNJANBVK\",\n            \"transactionId\": \"1c135c2f564fae17\",\n            \"createdDate\": \"2023-06-20T16:00:07.657+07:00\",\n            \"status\": \"Failed\",\n            \"statusDetail\": null,\n            \"recipientName\": \"To Me Coffee & Bakery\",\n            \"recipientLocation\": \"Jakarta\",\n            \"senderName\": \"Ahmad Zikri\",\n            \"senderBankName\": \"Hijra Bank\",\n            \"boxName\": \"Main Box\",\n            \"accountNumber\": \"110100006377\",\n            \"amount\": 25888,\n            \"acquirerName\": \"GAJA\",\n            \"merchantPAN\": \"97491230237495028756\",\n            \"terminalID\": \"FDHLL20951\",\n            \"customerPAN\": \"7865\"\n    }\n}","latency":0,"statusCode":200,"label":"Failed","headers":[],"bodyType":"INLINE","filePath":"","databucketID":"","sendFileAsBody":false,"rules":[{"target":"query","modifier":"transactionId","value":"0","invert":false,"operator":"equals"}],"rulesOperator":"OR","disableTemplating":false,"fallbackTo404":false,"default":false},{"uuid":"107f4f9f-b110-4691-ab53-a81a2593313d","body":"{\n    \"statusCode\": 400,\n    \"data\": \n        {\n            \"title\": \"Bad Request\",\n            \"description\": \"Bad Request\"\n        }\n}","latency":0,"statusCode":400,"label":"Bad Request","headers":[],"bodyType":"INLINE","filePath":"","databucketID":"","sendFileAsBody":false,"rules":[{"target":"query","modifier":"transactionId","value":"","invert":false,"operator":"null"}],"rulesOperator":"OR","disableTemplating":false,"fallbackTo404":false,"default":false},{"uuid":"df549e8f-5c2a-45dc-ab12-73f77cfbe5f4","body":"{\n    \"statusCode\": 400,\n    \"data\": \n        {\n            \"title\": \"Merchant not found\",\n            \"description\": \"Merchant not found\"\n        }\n}\n\n","latency":0,"statusCode":400,"label":"Merchant not found","headers":[],"bodyType":"INLINE","filePath":"","databucketID":"","sendFileAsBody":false,"rules":[{"target":"query","modifier":"transactionId","value":"2","invert":false,"operator":"equals"}],"rulesOperator":"OR","disableTemplating":false,"fallbackTo404":false,"default":false},{"uuid":"0ea39887-2f15-42b7-8e76-171971086e40","body":"{}","latency":0,"statusCode":401,"label":"Unauthorized","headers":[],"bodyType":"INLINE","filePath":"","databucketID":"","sendFileAsBody":false,"rules":[{"target":"query","modifier":"transactionId","value":"3","invert":false,"operator":"equals"}],"rulesOperator":"OR","disableTemplating":false,"fallbackTo404":false,"default":false},{"uuid":"c3f0327e-7623-49b2-820e-956c402bf98e","body":"{}","latency":0,"statusCode":404,"label":"Not Found","headers":[],"bodyType":"INLINE","filePath":"","databucketID":"","sendFileAsBody":false,"rules":[{"target":"query","modifier":"transactionId","value":"4","invert":false,"operator":"equals"}],"rulesOperator":"OR","disableTemplating":false,"fallbackTo404":false,"default":false},{"uuid":"5fb63b43-48da-449c-97a9-331d534195bd","body":"{}","latency":0,"statusCode":500,"label":"Internal Server Error","headers":[],"bodyType":"INLINE","filePath":"","databucketID":"","sendFileAsBody":false,"rules":[{"target":"query","modifier":"transactionId","value":"5","invert":false,"operator":"equals"}],"rulesOperator":"OR","disableTemplating":false,"fallbackTo404":false,"default":false}],"enabled":true,"responseMode":null}],"rootChildren":[{"type":"route","uuid":"b10237b7-2431-4517-89a5-4c21a098636d"},{"type":"route","uuid":"e2cb32dd-33d5-406c-95db-1b1ed5685c84"},{"type":"route","uuid":"c6478d63-ca88-4c71-b611-7b6000fd3d28"},{"type":"route","uuid":"113eb45b-47da-4558-a661-bf0413159e34"}],"proxyMode":false,"proxyHost":"","proxyRemovePrefix":false,"tlsOptions":{"enabled":false,"type":"CERT","pfxPath":"","certPath":"","keyPath":"","caPath":"","passphrase":""},"cors":true,"headers":[{"key":"Content-Type","value":"application/json"}],"proxyReqHeaders":[{"key":"","value":""}],"proxyResHeaders":[{"key":"","value":""}],"data":[{"uuid":"94c9a910-fcc2-44fb-b091-4caa3210d769","id":"1fdx","name":"Users","documentation":"","value":"[\n  {{#repeat 50}}\n  {\n    \"id\": \"{{faker 'datatype.uuid'}}\",\n    \"username\": \"{{faker 'internet.userName'}}\"\n  }\n  {{/repeat}}\n]"}]}
+{
+  "uuid": "44f8e007-d63d-45a4-8a89-99dfeefaf1e4",
+  "lastMigration": 27,
+  "name": "QRIS",
+  "endpointPrefix": "",
+  "latency": 0,
+  "port": 3000,
+  "hostname": "",
+  "folders": [],
+  "routes": [
+    {
+      "uuid": "6d829715-e5b6-468c-8b8a-47e1078edd50",
+      "type": "http",
+      "documentation": "QRIS Inquiry",
+      "method": "post",
+      "endpoint": "qris/inquiry",
+      "responses": [
+        {
+          "uuid": "924c9510-ef64-430d-adc9-5ebfe5fac706",
+          "body": "{\n  \"statusCode\": 0,\n  \"data\": {\n    \"type\": \"DYNAMIC\",\n    \"amount\": 0,\n    \"storeLabel\": \"MCDEEE\",\n    \"merchantCity\": \"Jakarta\",\n    \"acquirerName\": \"TESTES\",\n    \"merchantPan\": \"97491230237495028756\",\n    \"terminalId\": \"FDHLL20951\"\n  }\n}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "Success Dynamic QRIS",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [
+            {
+              "target": "body",
+              "modifier": "qrText",
+              "value": "DYNAMIC_MCD",
+              "invert": false,
+              "operator": "equals"
+            }
+          ],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": false
+        },
+        {
+          "uuid": "4860e1d4-5519-4bea-945a-6bd436ec5439",
+          "body": "{\n  \"statusCode\": 0,\n  \"data\": {\n    \"type\": \"STATIC\",\n    \"amount\": 50000,\n    \"storeLabel\": \"KFC\",\n    \"merchantCity\": \"Jakarta\",\n    \"acquirerName\": \"GAJA\",\n    \"merchantPan\": \"97491230237495028756\",\n    \"terminalId\": \"FDHLL20951\"\n  }\n}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "Success Static QRIS",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [
+            {
+              "target": "body",
+              "modifier": "qrText",
+              "value": "STATIC_KFC",
+              "invert": false,
+              "operator": "equals"
+            }
+          ],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": false
+        },
+        {
+          "uuid": "0489421f-cd9c-4ab2-b3c5-a7fe18c220ee",
+          "body": "{\n  \"statusCode\": 400,\n  \"data\": {\n    \"title\": \"Pembayaran Tip Gagal\",\n    \"description\": \"Maaf, pembayaran tip belum bisa dilakukan\",\n    \"image\": \"https://res.cloudinary.com/dbw2gd4m8/image/upload/v1689493869/Failed-Error-General_bzahbu.png\",\n    \"buttonTitle\": \"OK\"\n  }\n}",
+          "latency": 0,
+          "statusCode": 400,
+          "label": "Tip Failed",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [
+            {
+              "target": "body",
+              "modifier": "qrText",
+              "value": "TIP_FAILED",
+              "invert": false,
+              "operator": "equals"
+            }
+          ],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": false
+        },
+        {
+          "uuid": "3dedd71b-2327-4591-a123-1a4052c35d60",
+          "body": "{\n  \"statusCode\": 400,\n  \"data\": {\n    \"title\": \"Merchant Tidak Ditemukan\",\n    \"description\": \"Maaf, kode QR merchant ini tidak ditemukan. Cek ulang kode QR merchant, ya!\",\n    \"image\": \"https://res.cloudinary.com/dbw2gd4m8/image/upload/v1689493570/QRis_not_Found_1_mzd2dj.png\",\n    \"buttonTitle\": \"Scan Ulang\"\n  }\n}",
+          "latency": 0,
+          "statusCode": 400,
+          "label": "Merchant Not Found",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [
+            {
+              "target": "body",
+              "modifier": "qrText",
+              "value": "[\\s\\S]*",
+              "invert": false,
+              "operator": "regex"
+            }
+          ],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": false
+        },
+        {
+          "uuid": "f819ec9c-1726-409c-8a82-8b894177eba3",
+          "body": "{\n  \"statusCode\": 400,\n  \"data\": {\n    \"title\": \"Merchant ID Tidak Ditemukan\",\n    \"description\": \"Yuk, pastikan kode QR benar dan coba lagi\",\n    \"image\": \"https://res.cloudinary.com/dbw2gd4m8/image/upload/v1689493570/QRis_not_Found_1_mzd2dj.png\",\n    \"buttonTitle\": \"Scan Ulang\"\n  }\n}",
+          "latency": 0,
+          "statusCode": 400,
+          "label": "Merchant ID Not Valid",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [
+            {
+              "target": "body",
+              "modifier": "qrText",
+              "value": "MERCHANT_ID_INVALID",
+              "invert": false,
+              "operator": "equals"
+            }
+          ],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": false
+        },
+        {
+          "uuid": "adf346e2-be57-4a5e-ad54-d6bbfa33247f",
+          "body": "{\n  \"statusCode\": 400,\n  \"data\": {\n    \"title\": \"Missing parameters\",\n    \"description\": \"Maaf, Missing parameters\",\n    \"image\": \"https://res.cloudinary.com/dbw2gd4m8/image/upload/v1689493869/Failed-Error-General_bzahbu.png\",\n    \"buttonTitle\": \"OK\"\n  }\n}",
+          "latency": 0,
+          "statusCode": 400,
+          "label": "Bad Request - Missing parameters",
+          "headers": [
+            {
+              "key": "",
+              "value": ""
+            }
+          ],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true
+        }
+      ],
+      "enabled": true,
+      "responseMode": null
+    },
+    {
+      "uuid": "cc298f96-bfc6-4922-8c5e-da1849a146c0",
+      "type": "http",
+      "documentation": "QRIS validate",
+      "method": "post",
+      "endpoint": "digital/validate-debit",
+      "responses": [
+        {
+          "uuid": "ecb52829-3670-4b56-b13c-af880c903723",
+          "body": "{\n  \"statusCode\": \"00\",\n  \"data\": {\n    \"auth\": {\n      \"biometrics\": true,\n      \"exceedLimit\": false,\n      \"password\": false,\n      \"pin\": true\n    }\n  }\n}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "Success Validate QRIS",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [
+            {
+              "target": "body",
+              "modifier": "amount",
+              "value": "102",
+              "invert": false,
+              "operator": "equals"
+            },
+            {
+              "target": "body",
+              "modifier": "boxId",
+              "value": "123",
+              "invert": false,
+              "operator": "equals"
+            }
+          ],
+          "rulesOperator": "AND",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true
+        },
+        {
+          "uuid": "37cf0981-142f-4198-84cb-89e996b2eaa7",
+          "body": "{\n  \"statusCode\": 400,\n  \"data\": {\n    \"description\": \"Maksimal Pembayaran Rp20.000.000 satu hari\",\n    \"type\": \"field\"\n  }\n}",
+          "latency": 0,
+          "statusCode": 400,
+          "label": "Failed Validate QRIS - Exceed Limit Daily",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [
+            {
+              "target": "body",
+              "modifier": "qrText",
+              "value": "EXCEED_LIMIT_DAILY",
+              "invert": false,
+              "operator": "equals"
+            }
+          ],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": false
+        },
+        {
+          "uuid": "c27c8ed0-c16a-4abf-88f1-13aeefe65d1b",
+          "body": "{\n  \"statusCode\": 400,\n  \"data\": {\n    \"description\": \"Maksimal Rp1.000.000 sekali pembayaran\",\n    \"type\": \"field\"\n  }\n}",
+          "latency": 0,
+          "statusCode": 400,
+          "label": "Failed Validate QRIS - Exceed Limit Transaction",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [
+            {
+              "target": "body",
+              "modifier": "qrText",
+              "value": "EXCEED_LIMIT_TRANSACTION",
+              "invert": false,
+              "operator": "equals"
+            }
+          ],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": false
+        },
+        {
+          "uuid": "ae5e5242-c092-4291-b95e-1bd1b051eb28",
+          "body": "{\n  \"statusCode\": 400,\n  \"data\": {\n    \"description\": \"Koneksi terputus. Silakan cek internet kamu dan coba lagi.\",\n    \"type\": \"toast\"\n  }\n}",
+          "latency": 0,
+          "statusCode": 400,
+          "label": "Failed Validate QRIS - Connection RTO",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [
+            {
+              "target": "body",
+              "modifier": "qrText",
+              "value": "CONNECTION_RTO",
+              "invert": false,
+              "operator": "regex"
+            }
+          ],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": false
+        }
+      ],
+      "enabled": true,
+      "responseMode": null
+    },
+    {
+      "uuid": "c6478d63-ca88-4c71-b611-7b6000fd3d28",
+      "type": "http",
+      "documentation": "",
+      "method": "post",
+      "endpoint": "qris/pay",
+      "responses": [
+        {
+          "uuid": "be7f62e8-7f47-4896-b72d-ec29db55cabf",
+          "body": "{\n    \"statusCode\": 00,\n    \"data\": {\n            \"id\": \"test123\",\n            \"transactionId\": \"1c135c2f564fae17\",\n            \"createdDate\": \"2023-06-20T16:00:07.657+07:00\",\n            \"status\": \"Failed\",\n            \"statusDetail\": null,\n            \"recipientName\": \"To Me Coffee & Bakery\",\n            \"recipientLocation\": \"Jakarta\",\n            \"senderName\": \"Ahmad Zikri\",\n            \"senderBankName\": \"Hijra Bank\",\n            \"boxName\": \"Main Box\",\n            \"accountNumber\": \"110100006377\",\n            \"amount\": 25888,\n            \"acquirerName\": \"GAJA\",\n            \"merchantPAN\": \"97491230237495028756\",\n            \"terminalID\": \"FDHLL20951\",\n            \"customerPAN\": \"7865\",\n            \"reffId\": \"OSIDJNVOKNJANBVK\"\n    }\n}\n\n",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "Success",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [
+            {
+              "target": "body",
+              "modifier": "qrText",
+              "value": "",
+              "invert": true,
+              "operator": "null"
+            },
+            {
+              "target": "body",
+              "modifier": "boxId",
+              "value": "",
+              "invert": true,
+              "operator": "null"
+            },
+            {
+              "target": "body",
+              "modifier": "amount",
+              "value": "[2-9]\\d+",
+              "invert": false,
+              "operator": "regex"
+            }
+          ],
+          "rulesOperator": "AND",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true
+        },
+        {
+          "uuid": "d047fdab-dfd2-408b-b626-14b039c78524",
+          "body": "{\n    \"statusCode\": 400,\n    \"data\": \n        {\n           \"title\": \"Bad Request\",\n            \"description\": \"The request was malformed or missing required parameters\",\n            \"image\": \"\",\n            \"buttonTitle\": \"OK\",\n            \"rescan\": false,\n            \"type\": \"TOAST\",\n        }\n}\n\n",
+          "latency": 0,
+          "statusCode": 400,
+          "label": "Bad Request",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [
+            {
+              "target": "body",
+              "modifier": "qrText",
+              "value": "",
+              "invert": false,
+              "operator": "null"
+            },
+            {
+              "target": "body",
+              "modifier": "boxId",
+              "value": "",
+              "invert": false,
+              "operator": "null"
+            }
+          ],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": false
+        },
+        {
+          "uuid": "b7cd2ccb-4be7-4cdb-8c12-42716b1d76ec",
+          "body": "{\n    \"statusCode\": 400,\n    \"data\": \n        {\n           \"title\": \"Bank Not Found\",\n            \"description\": \"The bank is not registered in the system. Check the bank details and try again.\",\n            \"image\": \"https://storage.googleapis.com/hijra-salman-assets/icon-errors/failed.png\",\n            \"buttonTitle\": \"OK\",\n            \"rescan\": false,\n            \"type\": \"POPUP\",\n        }\n}\n\n",
+          "latency": 0,
+          "statusCode": 400,
+          "label": "Bank Not Supported error",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [
+            {
+              "target": "body",
+              "modifier": "qrText",
+              "value": "STATIC_KFC",
+              "invert": false,
+              "operator": "equals"
+            },
+            {
+              "target": "body",
+              "modifier": "amount",
+              "value": "100",
+              "invert": false,
+              "operator": "equals"
+            }
+          ],
+          "rulesOperator": "AND",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": false
+        },
+        {
+          "uuid": "b615b855-c150-4859-b7e7-cc7f9bae6942",
+          "body": "{\n    \"statusCode\": 400,\n    \"data\": \n        {\n           \"title\": \"Expired QR Code\",\n            \"description\": \"This QR code is no longer usable. Please try another QR code for your payment.\",\n            \"image\": \"https://storage.googleapis.com/hijra-salman-assets/icon-errors/failed.png\",\n            \"buttonTitle\": \"Scan Again\",\n            \"rescan\": true,\n            \"type\": \"POPUP\",\n        }\n}\n\n",
+          "latency": 0,
+          "statusCode": 400,
+          "label": "QR Expired error",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [
+            {
+              "target": "body",
+              "modifier": "qrText",
+              "value": "STATIC_KFC",
+              "invert": false,
+              "operator": "equals"
+            },
+            {
+              "target": "body",
+              "modifier": "amount",
+              "value": "101",
+              "invert": false,
+              "operator": "equals"
+            }
+          ],
+          "rulesOperator": "AND",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": false
+        },
+        {
+          "uuid": "aa12c1a1-5faa-45c1-813d-9fd9cf5e2f96",
+          "body": "{\n    \"statusCode\": 400,\n    \"data\": \n        {\n           \"title\": \"Account Not Found\",\n            \"description\": \"This QR code is no longer usable. Please try another QR code for your payment.\",\n            \"image\": \"https://storage.googleapis.com/hijra-salman-assets/icon-errors/failed.png\",\n            \"buttonTitle\": \"OK\",\n            \"rescan\": false,\n            \"type\": \"POPUP\",\n        }\n}\n\n",
+          "latency": 0,
+          "statusCode": 400,
+          "label": "No Account",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [
+            {
+              "target": "body",
+              "modifier": "qrText",
+              "value": "STATIC_KFC",
+              "invert": false,
+              "operator": "equals"
+            },
+            {
+              "target": "body",
+              "modifier": "amount",
+              "value": "102",
+              "invert": false,
+              "operator": "equals"
+            }
+          ],
+          "rulesOperator": "AND",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": false
+        },
+        {
+          "uuid": "a9c85a85-968a-4369-81cc-6446d1dcac59",
+          "body": "{\n    \"statusCode\": 400,\n    \"data\": \n        {\n           \"title\": \"Payment Process Failed\",\n            \"description\": \"Our system is undergoing maintenance. Please try again later.\",\n            \"image\": \"https://storage.googleapis.com/hijra-salman-assets/icon-errors/failed.png\",\n            \"buttonTitle\": \"OK\",\n            \"rescan\": false,\n            \"type\": \"POPUP\",\n        }\n}\n\n",
+          "latency": 0,
+          "statusCode": 400,
+          "label": "Link Down Error",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [
+            {
+              "target": "body",
+              "modifier": "qrText",
+              "value": "STATIC_KFC",
+              "invert": false,
+              "operator": "equals"
+            },
+            {
+              "target": "body",
+              "modifier": "amount",
+              "value": "103",
+              "invert": false,
+              "operator": "equals"
+            }
+          ],
+          "rulesOperator": "AND",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": false
+        },
+        {
+          "uuid": "dffdda3e-b17b-44c8-bf9f-2da136f325cc",
+          "body": "{\n    \"statusCode\": 15,\n    \"data\": \n        {\n           \"title\": \"Pin Locked\",\n            \"description\": \"Your account is locked\",\n            \"image\": \"\",\n            \"buttonTitle\": \"\",\n            \"rescan\": false,\n            \"type\": \"TOAST\",\n        }\n}\n\n",
+          "latency": 0,
+          "statusCode": 400,
+          "label": "Pin Locked",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [
+            {
+              "target": "body",
+              "modifier": "qrText",
+              "value": "STATIC_KFC",
+              "invert": false,
+              "operator": "equals"
+            },
+            {
+              "target": "body",
+              "modifier": "amount",
+              "value": "104",
+              "invert": false,
+              "operator": "equals"
+            }
+          ],
+          "rulesOperator": "AND",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": false
+        },
+        {
+          "uuid": "63024855-ef3e-4abc-b718-c4f6a3137b76",
+          "body": "{\n    \"statusCode\": 12,\n    \"data\": \n        {\n           \"title\": \"Wrong Pin/Password\",\n            \"description\": \"Wrong Pin/Password\",\n            \"image\": \"\",\n            \"buttonTitle\": \"\",\n            \"rescan\": false,\n            \"type\": \"TOAST\",\n        }\n}\n\n",
+          "latency": 0,
+          "statusCode": 400,
+          "label": "Wrong Pin/Password",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [
+            {
+              "target": "body",
+              "modifier": "qrText",
+              "value": "STATIC_KFC",
+              "invert": false,
+              "operator": "equals"
+            },
+            {
+              "target": "body",
+              "modifier": "amount",
+              "value": "105",
+              "invert": false,
+              "operator": "equals"
+            }
+          ],
+          "rulesOperator": "AND",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": false
+        },
+        {
+          "uuid": "f039d8a7-f1d9-4813-9b23-57a05d6eb3b8",
+          "body": "{}",
+          "latency": 0,
+          "statusCode": 401,
+          "label": "Unauthorized",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [
+            {
+              "target": "body",
+              "modifier": "qrText",
+              "value": "STATIC_KFC",
+              "invert": false,
+              "operator": "equals"
+            },
+            {
+              "target": "body",
+              "modifier": "amount",
+              "value": "106",
+              "invert": false,
+              "operator": "equals"
+            }
+          ],
+          "rulesOperator": "AND",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": false
+        },
+        {
+          "uuid": "96f6db8f-2780-4d6a-86b0-49d43109b1f4",
+          "body": "{}",
+          "latency": 0,
+          "statusCode": 404,
+          "label": "Not Found",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [
+            {
+              "target": "body",
+              "modifier": "qrText",
+              "value": "STATIC_KFC",
+              "invert": false,
+              "operator": "equals"
+            },
+            {
+              "target": "body",
+              "modifier": "amount",
+              "value": "107",
+              "invert": false,
+              "operator": "equals"
+            }
+          ],
+          "rulesOperator": "AND",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": false
+        },
+        {
+          "uuid": "7de86b08-a405-475e-bf32-10b70975b6dc",
+          "body": "{}",
+          "latency": 0,
+          "statusCode": 500,
+          "label": "Internal Server Error",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [
+            {
+              "target": "body",
+              "modifier": "qrText",
+              "value": "STATIC_KFC",
+              "invert": false,
+              "operator": "equals"
+            },
+            {
+              "target": "body",
+              "modifier": "amount",
+              "value": "108",
+              "invert": false,
+              "operator": "equals"
+            }
+          ],
+          "rulesOperator": "AND",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": false
+        }
+      ],
+      "enabled": true,
+      "responseMode": null
+    },
+    {
+      "uuid": "113eb45b-47da-4558-a661-bf0413159e34",
+      "type": "http",
+      "documentation": "",
+      "method": "get",
+      "endpoint": "qris/transaction",
+      "responses": [
+        {
+          "uuid": "3bdaa841-8bc4-4498-8938-148f66736e9a",
+          "body": "{\n    \"statusCode\": 00,\n    \"data\": {\n            \"id\": \"1\",\n            \"referenceId\": \"OSIDJNVOKNJANBVK\",\n            \"transactionId\": \"1c135c2f564fae17\",\n            \"createdDate\": \"2023-06-20T16:00:07.657+07:00\",\n            \"status\": \"Success\",\n            \"statusDetail\": null,\n            \"recipientName\": \"To Me Coffee & Bakery\",\n            \"recipientLocation\": \"Jakarta\",\n            \"senderName\": \"Ahmad Zikri\",\n            \"senderBankName\": \"Hijra Bank\",\n            \"boxName\": \"Main Box\",\n            \"accountNumber\": \"110100006377\",\n            \"amount\": 25888,\n            \"acquirerName\": \"GAJA\",\n            \"merchantPAN\": \"97491230237495028756\",\n            \"terminalID\": \"FDHLL20951\",\n            \"customerPAN\": \"7865\"\n    }\n}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "Success",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [
+            {
+              "target": "query",
+              "modifier": "transactionId",
+              "value": "1",
+              "invert": false,
+              "operator": "equals"
+            }
+          ],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true
+        },
+        {
+          "uuid": "03659893-5037-4da8-9edc-50d6973b07a8",
+          "body": "{\n    \"statusCode\": 00,\n    \"data\": {\n            \"id\": \"1\",\n            \"referenceId\": \"OSIDJNVOKNJANBVK\",\n            \"transactionId\": \"1c135c2f564fae17\",\n            \"createdDate\": \"2023-06-20T16:00:07.657+07:00\",\n            \"status\": \"Failed\",\n            \"statusDetail\": null,\n            \"recipientName\": \"To Me Coffee & Bakery\",\n            \"recipientLocation\": \"Jakarta\",\n            \"senderName\": \"Ahmad Zikri\",\n            \"senderBankName\": \"Hijra Bank\",\n            \"boxName\": \"Main Box\",\n            \"accountNumber\": \"110100006377\",\n            \"amount\": 25888,\n            \"acquirerName\": \"GAJA\",\n            \"merchantPAN\": \"97491230237495028756\",\n            \"terminalID\": \"FDHLL20951\",\n            \"customerPAN\": \"7865\"\n    }\n}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "Failed",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [
+            {
+              "target": "query",
+              "modifier": "transactionId",
+              "value": "0",
+              "invert": false,
+              "operator": "equals"
+            }
+          ],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": false
+        },
+        {
+          "uuid": "107f4f9f-b110-4691-ab53-a81a2593313d",
+          "body": "{\n    \"statusCode\": 400,\n    \"data\": \n        {\n            \"title\": \"Bad Request\",\n            \"description\": \"Bad Request\"\n        }\n}",
+          "latency": 0,
+          "statusCode": 400,
+          "label": "Bad Request",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [
+            {
+              "target": "query",
+              "modifier": "transactionId",
+              "value": "",
+              "invert": false,
+              "operator": "null"
+            }
+          ],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": false
+        },
+        {
+          "uuid": "df549e8f-5c2a-45dc-ab12-73f77cfbe5f4",
+          "body": "{\n    \"statusCode\": 400,\n    \"data\": \n        {\n            \"title\": \"Merchant not found\",\n            \"description\": \"Merchant not found\"\n        }\n}\n\n",
+          "latency": 0,
+          "statusCode": 400,
+          "label": "Merchant not found",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [
+            {
+              "target": "query",
+              "modifier": "transactionId",
+              "value": "2",
+              "invert": false,
+              "operator": "equals"
+            }
+          ],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": false
+        },
+        {
+          "uuid": "0ea39887-2f15-42b7-8e76-171971086e40",
+          "body": "{}",
+          "latency": 0,
+          "statusCode": 401,
+          "label": "Unauthorized",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [
+            {
+              "target": "query",
+              "modifier": "transactionId",
+              "value": "3",
+              "invert": false,
+              "operator": "equals"
+            }
+          ],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": false
+        },
+        {
+          "uuid": "c3f0327e-7623-49b2-820e-956c402bf98e",
+          "body": "{}",
+          "latency": 0,
+          "statusCode": 404,
+          "label": "Not Found",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [
+            {
+              "target": "query",
+              "modifier": "transactionId",
+              "value": "4",
+              "invert": false,
+              "operator": "equals"
+            }
+          ],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": false
+        },
+        {
+          "uuid": "5fb63b43-48da-449c-97a9-331d534195bd",
+          "body": "{}",
+          "latency": 0,
+          "statusCode": 500,
+          "label": "Internal Server Error",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [
+            {
+              "target": "query",
+              "modifier": "transactionId",
+              "value": "5",
+              "invert": false,
+              "operator": "equals"
+            }
+          ],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": false
+        }
+      ],
+      "enabled": true,
+      "responseMode": null
+    }
+  ],
+  "rootChildren": [
+    {
+      "type": "route",
+      "uuid": "b10237b7-2431-4517-89a5-4c21a098636d"
+    },
+    {
+      "type": "route",
+      "uuid": "e2cb32dd-33d5-406c-95db-1b1ed5685c84"
+    },
+    {
+      "type": "route",
+      "uuid": "c6478d63-ca88-4c71-b611-7b6000fd3d28"
+    },
+    {
+      "type": "route",
+      "uuid": "113eb45b-47da-4558-a661-bf0413159e34"
+    }
+  ],
+  "proxyMode": false,
+  "proxyHost": "",
+  "proxyRemovePrefix": false,
+  "tlsOptions": {
+    "enabled": false,
+    "type": "CERT",
+    "pfxPath": "",
+    "certPath": "",
+    "keyPath": "",
+    "caPath": "",
+    "passphrase": ""
+  },
+  "cors": true,
+  "headers": [
+    {
+      "key": "Content-Type",
+      "value": "application/json"
+    }
+  ],
+  "proxyReqHeaders": [
+    {
+      "key": "",
+      "value": ""
+    }
+  ],
+  "proxyResHeaders": [
+    {
+      "key": "",
+      "value": ""
+    }
+  ],
+  "data": [
+    {
+      "uuid": "94c9a910-fcc2-44fb-b091-4caa3210d769",
+      "id": "1fdx",
+      "name": "Users",
+      "documentation": "",
+      "value": "[\n  {{#repeat 50}}\n  {\n    \"id\": \"{{faker 'datatype.uuid'}}\",\n    \"username\": \"{{faker 'internet.userName'}}\"\n  }\n  {{/repeat}}\n]"
+    }
+  ]
+}
