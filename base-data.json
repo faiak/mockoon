@@ -17,7 +17,7 @@
       "responses": [
         {
           "uuid": "f54cff14-e1b2-4e76-9a74-435a5e53d875",
-          "body": "{\n  \"statusCode\": 0,\n  \"data\": {\n    \"type\": \"DYNAMIC\",\n    \"amount\": 25000,\n    \"storeLabel\": \"MCDEEE\",\n    \"merchantCity\": \"Jakarta\",\n    \"acquirerName\": \"TESTES\",\n    \"merchantPan\": \"97491230237495028756\",\n    \"terminalId\": \"FDHLL20951\"\n  }\n}",
+          "body": "{\n  \"statusCode\": \"00\",\n  \"data\": {\n    \"type\": \"DYNAMIC\",\n    \"amount\": 0,\n    \"storeLabel\": \"MCDEEE\",\n    \"merchantCity\": \"Jakarta\",\n    \"acquirerName\": \"TESTES\",\n    \"merchantPan\": \"97491230237495028756\",\n    \"terminalId\": \"FDHLL20951\"\n  }\n}",
           "latency": 0,
           "statusCode": 200,
           "label": "Success Dynamic QRIS",
@@ -42,7 +42,7 @@
         },
         {
           "uuid": "c54777ff-5c7f-4912-82c8-39d30a888655",
-          "body": "{\n  \"statusCode\": 0,\n  \"data\": {\n    \"type\": \"STATIC\",\n    \"amount\": null,\n    \"storeLabel\": \"KFC\",\n    \"merchantCity\": \"Jakarta\",\n    \"acquirerName\": \"GAJA\",\n    \"merchantPan\": \"97491230237495028756\",\n    \"terminalId\": \"FDHLL20951\"\n  }\n}",
+          "body": "{\n  \"statusCode\": \"00\",\n  \"data\": {\n    \"type\": \"STATIC\",\n    \"amount\": 50000,\n    \"storeLabel\": \"KFC\",\n    \"merchantCity\": \"Jakarta\",\n    \"acquirerName\": \"GAJA\",\n    \"merchantPan\": \"97491230237495028756\",\n    \"terminalId\": \"FDHLL20951\"\n  }\n}",
           "latency": 0,
           "statusCode": 200,
           "label": "Success Static QRIS",
@@ -67,7 +67,7 @@
         },
         {
           "uuid": "690ac2b5-56ee-4536-8db6-3fa517c50898",
-          "body": "{\n  \"statusCode\": 400,\n  \"data\": {\n    \"title\": \"Pembayaran Tip Gagal\",\n    \"description\": \"Maaf, pembayaran tip belum bisa dilakukan\",\n    \"image\": \"https://res.cloudinary.com/dbw2gd4m8/image/upload/v1689493869/Failed-Error-General_bzahbu.png\",\n    \"title_button\": \"OK\",\n    \"button_test_id\": \"1\",\n    \"is_scan\": true\n  }\n}",
+          "body": "{\n  \"statusCode\": \"400\",\n  \"data\": {\n    \"title\": \"Pembayaran Tip Gagal\",\n    \"description\": \"Maaf, pembayaran tip belum bisa dilakukan\",\n    \"image\": \"https://res.cloudinary.com/dbw2gd4m8/image/upload/v1689493869/Failed-Error-General_bzahbu.png\",\n    \"buttonTitle\": \"OK\"\n  }\n}",
           "latency": 0,
           "statusCode": 400,
           "label": "Tip Failed",
@@ -92,7 +92,7 @@
         },
         {
           "uuid": "61623f34-db88-4405-848c-216062c07706",
-          "body": "{\n  \"statusCode\": 400,\n  \"data\": {\n    \"title\": \"Merchant Tidak Ditemukan\",\n    \"description\": \"Maaf, kode QR merchant ini tidak ditemukan. Cek ulang kode QR merchant, ya!\",\n    \"image\": \"https://res.cloudinary.com/dbw2gd4m8/image/upload/v1689493570/QRis_not_Found_1_mzd2dj.png\",\n    \"title_button\": \"Scan Ulang\",\n    \"button_test_id\": \"1\",\n    \"is_scan\": true\n  }\n}",
+          "body": "{\n  \"statusCode\": \"400\",\n  \"data\": {\n    \"title\": \"Merchant Tidak Ditemukan\",\n    \"description\": \"Maaf, kode QR merchant ini tidak ditemukan. Cek ulang kode QR merchant, ya!\",\n    \"image\": \"https://res.cloudinary.com/dbw2gd4m8/image/upload/v1689493570/QRis_not_Found_1_mzd2dj.png\",\n    \"buttonTitle\": \"Scan Ulang\"\n  }\n}",
           "latency": 0,
           "statusCode": 400,
           "label": "Merchant Not Found",
@@ -116,8 +116,33 @@
           "default": false
         },
         {
+          "uuid": "bea1f68a-a45c-4ed6-90ee-56837d398d5f",
+          "body": "{\n  \"statusCode\": \"400\",\n  \"data\": {\n    \"title\": \"Merchant ID Tidak Ditemukan\",\n    \"description\": \"Yuk, pastikan kode QR benar dan coba lagi\",\n    \"image\": \"https://res.cloudinary.com/dbw2gd4m8/image/upload/v1689493570/QRis_not_Found_1_mzd2dj.png\",\n    \"buttonTitle\": \"Scan Ulang\"\n  }\n}",
+          "latency": 0,
+          "statusCode": 400,
+          "label": "Merchant ID Not Valid",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [
+            {
+              "target": "body",
+              "modifier": "qrText",
+              "value": "MERCHANT_ID_INVALID",
+              "invert": false,
+              "operator": "equals"
+            }
+          ],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": false
+        },
+        {
           "uuid": "5519aa92-580c-4d5c-9c67-35a9714f4fc7",
-          "body": "{\n  \"statusCode\": 400,\n  \"data\": {\n    \"title\": \"Missing parameters\",\n    \"description\": \"Maaf, Missing parameters\",\n    \"image\": \"https://res.cloudinary.com/dbw2gd4m8/image/upload/v1689493869/Failed-Error-General_bzahbu.png\",\n    \"title_button\": \"OK\",\n    \"button_test_id\": \"1\",\n    \"is_scan\": true\n  }\n}",
+          "body": "{\n  \"statusCode\": \"400\",\n  \"data\": {\n    \"title\": \"Missing parameters\",\n    \"description\": \"Maaf, Missing parameters\",\n    \"image\": \"https://res.cloudinary.com/dbw2gd4m8/image/upload/v1689493869/Failed-Error-General_bzahbu.png\",\n    \"buttonTitle\": \"OK\"\n  }\n}",
           "latency": 0,
           "statusCode": 400,
           "label": "Bad Request - Missing parameters",
@@ -146,14 +171,14 @@
       "type": "http",
       "documentation": "QRIS validate",
       "method": "post",
-      "endpoint": "qris/validate",
+      "endpoint": "digital/validate-debit",
       "responses": [
         {
           "uuid": "30423437-5e3f-49a2-822e-f21ace57d7c7",
-          "body": "{\n  \"statusCode\": 0,\n  \"data\": {\n    \"resp\": \"LIMIT_EXCEED\", \n  }\n}",
+          "body": "{\n  \"statusCode\": \"00\",\n  \"data\": {\n    \"auth\": {\n      \"biometrics\": true,\n      \"exceedLimit\": false,\n      \"password\": false,\n      \"pin\": true\n    }, \n  }\n}",
           "latency": 0,
-          "statusCode": 400,
-          "label": "Success Dynamic QRIS",
+          "statusCode": 200,
+          "label": "Success Validate QRIS",
           "headers": [],
           "bodyType": "INLINE",
           "filePath": "",
@@ -166,19 +191,26 @@
               "value": "102",
               "invert": false,
               "operator": "equals"
+            },
+            {
+              "target": "body",
+              "modifier": "boxId",
+              "value": "123",
+              "invert": false,
+              "operator": "equals"
             }
           ],
-          "rulesOperator": "OR",
+          "rulesOperator": "AND",
           "disableTemplating": false,
           "fallbackTo404": false,
-          "default": false
+          "default": true
         },
         {
           "uuid": "dbf7decc-7ec2-4caa-b06a-86105313fc62",
-          "body": "{\n  \"statusCode\": 0,\n  \"data\": {\n    \"type\": \"STATIC\",\n    \"amount\": null,\n    \"storeLabel\": \"KFC\",\n    \"merchantCity\": \"Jakarta\",\n    \"acquirerName\": \"GAJA\",\n    \"merchantPan\": \"97491230237495028756\",\n    \"terminalId\": \"FDHLL20951\"\n  }\n}",
+          "body": "{\n  \"statusCode\": \"400\",\n  \"data\": {\n    \"description\": \"Maksimal Pembayaran Rp20.000.000 satu hari\",\n    \"type\": \"field\"\n  }\n}",
           "latency": 0,
-          "statusCode": 200,
-          "label": "Success Static QRIS",
+          "statusCode": 400,
+          "label": "Failed Validate QRIS - Exceed Limit Daily",
           "headers": [],
           "bodyType": "INLINE",
           "filePath": "",
@@ -188,7 +220,7 @@
             {
               "target": "body",
               "modifier": "qrText",
-              "value": "STATIC_KFC",
+              "value": "EXCEED_LIMIT_DAILY",
               "invert": false,
               "operator": "equals"
             }
@@ -200,10 +232,10 @@
         },
         {
           "uuid": "c4561bb2-4106-4dc5-9849-7e5e719b668c",
-          "body": "{\n  \"statusCode\": 400,\n  \"data\": {\n    \"title\": \"Pembayaran Tip Gagal\",\n    \"description\": \"Maaf, pembayaran tip belum bisa dilakukan\",\n    \"image\": \"https://res.cloudinary.com/dbw2gd4m8/image/upload/v1689493869/Failed-Error-General_bzahbu.png\",\n    \"title_button\": \"OK\",\n    \"button_test_id\": \"1\",\n    \"is_scan\": true\n  }\n}",
+          "body": "{\n  \"statusCode\": \"400\",\n  \"data\": {\n    \"description\": \"Maksimal Rp1.000.000 sekali pembayaran\",\n    \"type\": \"field\"\n  }\n}",
           "latency": 0,
           "statusCode": 400,
-          "label": "Tip Failed",
+          "label": "Failed Validate QRIS - Exceed Limit Transaction",
           "headers": [],
           "bodyType": "INLINE",
           "filePath": "",
@@ -213,7 +245,7 @@
             {
               "target": "body",
               "modifier": "qrText",
-              "value": "TIP_FAILED",
+              "value": "EXCEED_LIMIT_TRANSACTION",
               "invert": false,
               "operator": "equals"
             }
@@ -225,10 +257,10 @@
         },
         {
           "uuid": "3f0fe468-c1a8-4b3c-a40d-d9b06a9be5a8",
-          "body": "{\n  \"statusCode\": 400,\n  \"data\": {\n    \"title\": \"Merchant Tidak Ditemukan\",\n    \"description\": \"Maaf, kode QR merchant ini tidak ditemukan. Cek ulang kode QR merchant, ya!\",\n    \"image\": \"https://res.cloudinary.com/dbw2gd4m8/image/upload/v1689493570/QRis_not_Found_1_mzd2dj.png\",\n    \"title_button\": \"Scan Ulang\",\n    \"button_test_id\": \"1\",\n    \"is_scan\": true\n  }\n}",
+          "body": "{\n  \"statusCode\": \"400\",\n  \"data\": {\n    \"description\": \"Koneksi terputus. Silakan cek internet kamu dan coba lagi.\",\n    \"type\": \"toast\"\n  }\n}",
           "latency": 0,
           "statusCode": 400,
-          "label": "Merchant Not Found",
+          "label": "Failed Validate QRIS - Connection RTO",
           "headers": [],
           "bodyType": "INLINE",
           "filePath": "",
@@ -238,7 +270,7 @@
             {
               "target": "body",
               "modifier": "qrText",
-              "value": "[\\s\\S]*",
+              "value": "CONNECTION_RTO",
               "invert": false,
               "operator": "regex"
             }
@@ -247,28 +279,6 @@
           "disableTemplating": false,
           "fallbackTo404": false,
           "default": false
-        },
-        {
-          "uuid": "820bfdb5-d0c9-4b65-9646-b1f9cfce9ddc",
-          "body": "{\n  \"statusCode\": 400,\n  \"data\": {\n    \"title\": \"Missing parameters\",\n    \"description\": \"Maaf, Missing parameters\",\n    \"image\": \"https://res.cloudinary.com/dbw2gd4m8/image/upload/v1689493869/Failed-Error-General_bzahbu.png\",\n    \"title_button\": \"OK\",\n    \"button_test_id\": \"1\",\n    \"is_scan\": true\n  }\n}",
-          "latency": 0,
-          "statusCode": 400,
-          "label": "Bad Request - Missing parameters",
-          "headers": [
-            {
-              "key": "",
-              "value": ""
-            }
-          ],
-          "bodyType": "INLINE",
-          "filePath": "",
-          "databucketID": "",
-          "sendFileAsBody": false,
-          "rules": [],
-          "rulesOperator": "OR",
-          "disableTemplating": false,
-          "fallbackTo404": false,
-          "default": true
         }
       ],
       "enabled": true,
